@@ -20,37 +20,39 @@ social.rss = {
       <div
         class='flex items-center gap-x-4 gap-y-2 text-muted-foreground max-sm:flex-col [&_a:hover]:text-primary [&_a]:text-foreground'
       >
-        {
-          footerConf.registration && (
-            <a
-              class='text-xs'
-              style='color:hsl(var(--muted-foreground)/var(--tw-text-opacity,1))'
-              href={footerConf.registration.url}
-              target='_blank'
-            >
-              {footerConf.registration.text}
-            </a>
-          )
-        }
-        <span>
-          © {year}
-          {config.author} &
-          <a href='/terms/list'>Site policy</a>
-        </span>
-        {
-          footerConf.credits && (
-            <span class='text-muted-foreground [&_a:hover]:text-primary [&_a]:text-foreground'>
-              <a href='https://github.com/withastro/astro' target='_blank'>
-                Astro
+        <slot name="copyright">
+          {
+            footerConf.registration && (
+              <a
+                class='text-xs'
+                style='color:hsl(var(--muted-foreground)/var(--tw-text-opacity,1))'
+                href={footerConf.registration.url}
+                target='_blank'
+              >
+                {footerConf.registration.text}
               </a>
-              &
-              <a href='https://github.com/cworld1/astro-theme-pure' target='_blank'>
-                Pure
-              </a>
-              theme powered
-            </span>
-          )
-        }
+            )
+          }
+          <span>
+            © {year}
+            {config.author} &
+            <a href='/terms/list'>Site policy</a>
+          </span>
+          {
+            footerConf.credits && (
+              <span class='text-muted-foreground [&_a:hover]:text-primary [&_a]:text-foreground'>
+                <a href='https://github.com/withastro/astro' target='_blank'>
+                  Astro
+                </a>
+                &
+                <a href='https://github.com/cworld1/astro-theme-pure' target='_blank'>
+                  Pure
+                </a>
+                theme powered
+              </span>
+            )
+          }
+        </slot>
       </div>
 
       {/* Social Brands */}
