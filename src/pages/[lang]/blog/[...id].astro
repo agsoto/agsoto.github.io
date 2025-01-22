@@ -1,0 +1,40 @@
+---
+import { render, type CollectionEntry } from 'astro:content'
+
+import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
+import PostLayout from '@/layouts/BlogPost.astro'
+
+export const prerender = true
+
+
+export async function getStaticPaths() {
+  // Define the languages you want to support
+  const supportedLangs = ['es', 'en'];
+
+  // Collect posts for each language
+  const allPaths = [];
+  for (const lang of supportedLangs) {
+    const posts = sortMDByDate(await getBlogCollection(`blog_${lang}`));
+    const paths = posts.map((post: CollectionEntry<`blog_en`>) => ({ //Using _en or _es with CollectionEntry is indiferent because the schema is the same
+      params: { id: post.id, lang },
+      props: { post, posts },
+    }));
+    allPaths.push(...paths);
+  }
+
+  return allPaths;
+}
+
+type Props = {
+  post: CollectionEntry<`blog_en`>
+  posts: CollectionEntry<'blog_en'>[],
+  lang: string
+}
+
+const { post, posts } = Astro.props
+const { Content, headings, remarkPluginFrontmatter } = await render(post)
+---
+
+<PostLayout {post} {posts} {headings} {remarkPluginFrontmatter}>
+  <Content />
+</PostLayout>
