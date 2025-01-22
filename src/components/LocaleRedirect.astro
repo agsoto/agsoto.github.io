@@ -1,0 +1,24 @@
+<script>
+  const userLocale = navigator.language || navigator.userLanguage; // Browser locale
+  const supportedLocales = ['en', 'es']; // List of supported locales
+  const defaultLocale = 'en'; // Fallback locale
+
+  // Extract the current locale from the URL
+  const currentPath = window.location.pathname; // e.g., "/fr/some-page"
+  const pathParts = currentPath.split('/');
+  const currentLocale = supportedLocales.includes(pathParts[1]) ? pathParts[1] : null;
+
+  // Function to determine the best match for the browser locale
+  function getBestLocale(locale) {
+    const baseLocale = locale.split('-')[0]; // Extract base locale (e.g., 'en' from 'en-US')
+    return supportedLocales.includes(baseLocale) ? baseLocale : defaultLocale;
+  }
+
+  if (!currentLocale) {
+    // If no locale is in the URL, redirect to the user's preferred locale
+    const redirectLocale = getBestLocale(userLocale);
+    const newPath = `/${redirectLocale}${currentPath === '/' ? '' : currentPath}`; // Preserve the path
+    localStorage.setItem('locale', redirectLocale); // Store detected locale
+    window.location.href = newPath;
+  }
+</script>
