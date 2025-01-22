@@ -2,13 +2,14 @@
 
 import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 // Adapter
-import vercel from '@astrojs/vercel'
+// import vercel from '@astrojs/vercel'
 // Integrations
 import AstroPureIntegration from 'astro-pure'
 import { defineConfig } from 'astro/config'
 // Rehype & remark packages
 import rehypeKatex from 'rehype-katex'
 import remarkMath from 'remark-math'
+import path from 'path';
 
 // Others
 // import { visualizer } from 'rollup-plugin-visualizer'
@@ -26,19 +27,19 @@ import {
   transformerNotationHighlight,
   updateStyle
 } from './src/plugins/shiki-transformers.ts'
-import config from './src/site.config.ts'
+import config from './src/site-config.ts'
 
 // https://astro.build/config
 export default defineConfig({
   // Top-Level Options
   site: 'https://astro-pure.js.org',
   // base: '/docs',
-  trailingSlash: 'never',
+  trailingSlash: 'ignore',
 
   // Adapter
   // 1. Vercel (serverless)
-  adapter: vercel(),
-  output: 'server',
+  // adapter: vercel(),
+  output: 'static',
   // 2. Vercel (static)
   // adapter: vercelStatic(),
   // 3. Local (standalone)
@@ -108,9 +109,14 @@ export default defineConfig({
     }
   },
   experimental: {
-    svg: true
+    // svg: true
   },
   vite: {
+    resolve: {
+      alias: {
+        '@': path.resolve('./src')
+      },
+    }
     // plugins: [
     //   visualizer({
     //     emitFile: true,

@@ -93,7 +93,7 @@ const config = {
         background: 'hsl(var(--background) / <alpha-value>)',
         foreground: 'hsl(var(--foreground) / <alpha-value>)',
         primary: {
-          DEFAULT: 'hsl(var(--primary) / <alpha-value>)',
+          DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground) / <alpha-value>)'
         },
         secondary: {
