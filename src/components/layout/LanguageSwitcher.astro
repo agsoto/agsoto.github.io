@@ -1,0 +1,61 @@
+---
+const lang = Astro.params?.lang || 'en';
+const toggleLang = lang === 'en' ? 'es' : 'en';
+const currentPath = Astro.url.pathname;
+var toggleLangPath = currentPath.replace(`/${lang}/`, `/${toggleLang}/`);
+if(toggleLangPath.endsWith(`/${lang}`)) toggleLangPath = toggleLangPath.replace(`/${lang}`, `/${toggleLang}`);
+
+---
+<a class='px-1 py-2' href={`${toggleLangPath}`} title='Language'>
+    <span class='sr-only'>Language</span>
+    <svg viewBox="0 0 32 32" class='size-5'>
+        <style>
+            svg {
+                overflow: visible;
+            }
+
+            /* Initial state of the arrows */
+            #flecha-1,
+            #flecha-2 {
+                opacity: 0;
+                transition: opacity 0.3s ease-in-out;
+            }
+
+            /* Initial state of the text */
+            #es {
+                transform-origin: center center;
+                transform: scale(1.4);
+                transition: transform 0.3s ease-in-out;
+            }
+
+            /* Hover effect for the SVG */
+            svg:hover #flecha-1,
+            svg:hover #flecha-2 {
+                opacity: 1;
+            }
+
+            svg:hover #es {
+                transform: scale(0.9);
+            }
+
+            #es tspan {
+                text-transform: uppercase;
+            }
+        </style>
+        <path
+            d="m 0.94699795,21.450095 c 0.46132175,-0.0052 0.83912145,0.363211 0.84540035,0.824506 0.031312,2.574782 0.3997355,3.940979 1.269129,4.697647 0.7483319,0.650222 2.0477331,1.008197 4.4179051,0.957057 l -1.083356,-1.546761 c -0.264053,-0.377826 -0.172208,-0.898623 0.205607,-1.163724 0.377827,-0.264054 0.897582,-0.172209 1.162683,0.205607 l 1.947538,2.783534 c 0.2108255,0.299541 0.2003895,0.70136 -0.02505,0.990455 l -1.947538,2.504859 c -0.282843,0.364254 -0.807808,0.430008 -1.172061,0.147161 -0.364254,-0.282842 -0.428966,-0.807808 -0.146116,-1.172061 l 0.835995,-1.074992 C 4.8817014,29.629473 3.1419528,29.253744 1.9666056,28.231975 0.48455679,26.945105 0.15370159,24.856626 0.12241419,22.295391 0.11615219,21.834069 0.48562559,21.456269 0.94692055,21.44999 Z"
+            id="flecha-1" fill="currentColor" style="stroke-width:0.267185" />
+        <path
+            d="m 30.289759,9.9644509 c 0.0063,0.4613211 0.384079,0.8297431 0.8454,0.8245061 0.461323,-0.0063 0.830786,-0.384079 0.824506,-0.8454001 -0.03131,-2.5612097 -0.362168,-4.6495547 -1.844191,-5.9365847 -1.175186,-1.021769 -2.914989,-1.397511 -5.290531,-1.371407 l 0.835996,-1.074993 c 0.282842,-0.364253 0.218132,-0.88921795 -0.146116,-1.17205995 -0.364253,-0.2828422 -0.889219,-0.2170883 -1.172061,0.14716 l -1.94858,2.50485995 c -0.224393,0.289094 -0.234832,0.690913 -0.024,0.990455 l 1.947539,2.783533 c 0.265098,0.377827 0.784856,0.469658 1.162682,0.205607 0.377827,-0.265098 0.469658,-0.785898 0.205607,-1.163724 l -1.083354,-1.546761 c 2.370225,-0.05114 3.669519,0.306835 4.417904,0.957057 0.869394,0.756668 1.237815,2.122865 1.269129,4.6976467 z"
+            id="flecha-2" fill="currentColor" style="stroke-width:0.267185" />
+
+        <text xml:space="preserve" fill="currentColor"
+            style="font-size:15.3389px;line-height:0.9;font-family:'MBF Prime';-inkscape-font-specification:'MBF Prime';letter-spacing:0.554666px;stroke-width:0.410866"
+            x="0" y="21.489948" id="es">
+            <tspan id="tspan5" x="0" y="21.489948"
+                style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Arial';-inkscape-font-specification:'Arial';stroke-width:0.410866">
+                {`${lang}`}</tspan>
+        </text>
+
+    </svg>
+</a>
