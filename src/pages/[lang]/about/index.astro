@@ -1,0 +1,357 @@
+---
+import { Image } from 'astro:assets'
+import Collapse from '@/components/Collapse.astro'
+import { Timeline } from 'astro-pure/user'
+import PageLayout from '@/layouts/CommonPage.astro'
+import { Comment } from 'astro-pure/advanced'
+import ToolSection from '@/components/about/ToolSection.astro'
+import FlipCards from '@/components/about/FlipCards.astro'
+import Button from '@/components/Button.astro'
+import Substats from '@/components/about/Substats.astro'
+import Spoiler from '@/components/Spoiler.astro'
+import { config } from 'src/site-config.ts'
+import Label from '@/components/home/Label.astro'
+
+import avatar from '@/assets/avatar.svg'
+
+export { getStaticPaths } from '../../../utils/autoStaticPaths.ts';
+
+const lang = Astro.params?.lang || 'en';
+
+const headings = [
+  {
+    depth: 2,
+    slug: 'general-talk',
+    text: 'General Talk'
+  },
+  {
+    depth: 2,
+    slug: 'tools',
+    text: 'Tools'
+  },
+  {
+    depth: 2,
+    slug: 'social-networks',
+    text: 'Social Networks'
+  },
+  {
+    depth: 2,
+    slug: 'gossips',
+    text: 'Gossips'
+  },
+  {
+    depth: 2,
+    slug: 'about-blog',
+    text: 'About Blog'
+  }
+]
+
+const content = {
+  en: { 
+    title: 'Acerca de', 
+    description: "I’m passionate about knowledge and its power to transform lives. Over the past decade, I have been deeply involved in creating platforms, contributing from the initial idea to validating their impact, and covering every stage of the software lifecycle. While my background is primarily technical, I have also brought together the efforts of multidisciplinary teams to drive successful technological initiatives." },
+  es: { title: 'Potenciando organizaciones visionarias con soluciones digitales centradas en las personas.', 
+        description: 'Me apasiona el conocimiento y su poder para transformar vidas. Durante la última década, he estado profundamente involucrado en la creación de plataformas, contribuyendo desde la idea inicial hasta la validación de su impacto, y abarcando todas las etapas del ciclo de vida del software. Aunque mi formación es principalmente técnica, también he unido los esfuerzos de equipos multidisciplinarios para impulsar iniciativas tecnológicas exitosas.' }
+}[lang];
+
+const cardsContent = {
+  en: [
+    {
+      icon: "🔍",
+      label: "Skepticism",
+      description: "Doubt as the compass of truth."
+    },
+    {
+      icon: "🍃",
+      label: "Taoism",
+      description: "The way is unique for everyone, yet the same."
+    },
+    {
+      icon: "🏛️",
+      label: "Stoicism",
+      description: "Seek character and wisdom on thoughts and actions."
+    },
+    {
+      icon: "📊",
+      label: "Dataism",
+      description: "Trust data over anything else."
+    }],
+  es: [
+    {
+      icon: "🔍",
+      label: "Escepticismo",
+      description: "La duda como brújula de la verdad."
+    },
+    {
+      icon: "🍃",
+      label: "Taoísmo",
+      description: "El camino es diferente para cada uno y sin embargo es el mismo."
+    },
+    {
+      icon: "🏛️",
+      label: "Estoicismo",
+      description: "Buscar el carácter sabio en los pensamientos y las acciones."
+    },
+    {
+      icon: "📊",
+      label: "Dataísmo",
+      description: "Confiar en los datos sobre cualquier otra cosa."
+    }]
+}[lang];
+---
+
+<PageLayout title='About' headings={headings} info='/about'>
+  
+    <Image
+      src={avatar}
+      alt='profile'
+      class='h-28 w-auto rounded-full border p-1'
+      loading='eager'
+    />
+  <p>Project Manager / Lead Developer</p>
+  <p>
+    {content.description}
+  </p>
+  <!-- <Button title='Sponsor Me' class='w-fit' href='/projects#sponsorship' style='ahead' /> -->
+  <!-- general-talk -->
+  <h2 id='general-talk'>Core Philosophies</h2>
+  <FlipCards cardsData={cardsContent} />
+  <!-- 
+  <h2 id='tools'>Tools</h2>
+  <p>Current support tools as follow:</p>
+  <ToolSection
+    class='mb-5'
+    title='Design'
+    tools={[
+      {
+        name: 'Photoshop',
+        description: 'Picture Editing',
+        href: 'https://www.adobe.com/products/photoshop',
+        iconPath: 'photoshop'
+      },
+      {
+        name: 'Illustrator',
+        description: 'Vector Drawing',
+        href: 'https://www.adobe.com/products/illustrator',
+        iconPath: 'illustrator'
+      },
+      {
+        name: 'After Effects',
+        description: 'Motion Graphics',
+        href: 'https://www.adobe.com/products/aftereffects',
+        iconPath: 'aftereffects'
+      },
+      {
+        name: 'Premiere Pro',
+        description: 'Video Editing',
+        href: 'https://www.adobe.com/products/premiere',
+        iconPath: 'premiere'
+      },
+      {
+        name: 'Animate',
+        description: 'Animation Creating',
+        href: 'https://www.adobe.com/products/animate',
+        iconPath: 'animate'
+      }
+    ]}
+  />
+  <ToolSection
+    class='mb-5'
+    title='Productivity'
+    tools={[
+      {
+        name: 'Safari',
+        description: 'Broswer',
+        href: 'https://www.apple.com/safari/',
+        iconPath: 'safari'
+      },
+      {
+        name: 'Chrome',
+        description: 'Broswer',
+        href: 'https://www.google.com/chrome/',
+        iconPath: 'chrome'
+      },
+      {
+        name: 'Arc',
+        description: 'Broswer',
+        href: 'https://arc.net/',
+        iconPath: 'arc'
+      },
+      {
+        name: 'Firefox',
+        description: 'Broswer',
+        href: 'https://www.mozilla.org/en-US/firefox',
+        iconPath: 'firefox'
+      },
+      {
+        name: 'Zerotier',
+        description: 'Remote Collaboration',
+        href: 'https://www.zerotier.com//',
+        iconPath: 'zerotier'
+      },
+      {
+        name: 'Tailscale',
+        description: 'Remote Collaboration',
+        href: 'https://tailscale.com/',
+        iconPath: 'tailscale'
+      },
+      {
+        name: 'Notion',
+        description: 'Note Taking',
+        href: 'https://www.notion.so/',
+        iconPath: 'notion'
+      },
+      {
+        name: 'Typora',
+        description: 'Markdown Editor',
+        href: 'https://typora.io/',
+        iconPath: 'typora'
+      },
+      {
+        name: 'Warp',
+        description: 'Terminal',
+        href: 'https://warp.dev/',
+        iconPath: 'warp'
+      }
+    ]}
+  />
+  <ToolSection
+    class='mb-5'
+    title='Development'
+    tools={[
+      {
+        name: 'VS Code',
+        description: 'IDE',
+        href: 'https://code.visualstudio.com/',
+        iconPath: 'vscode'
+      },
+      {
+        name: 'Neovim',
+        description: 'IDE',
+        href: 'https://neovim.io/',
+        iconPath: 'neovim'
+      },
+      {
+        name: 'Sublime Text',
+        description: 'IDE',
+        href: 'https://www.sublimetext.com/',
+        iconPath: 'sublime'
+      },
+      {
+        name: 'Unity Editor',
+        description: 'Game Engine',
+        href: 'https://unity.com/',
+        iconPath: 'unity'
+      },
+      {
+        name: 'Android Studio',
+        description: 'Android Development',
+        href: 'https://developer.android.com/studio',
+        iconPath: 'androidstudio'
+      },
+      {
+        name: 'QT',
+        description: 'C++ Compontent Development',
+        href: 'https://www.qt.io/',
+        iconPath: 'qt'
+      }
+    ]}
+  />
+  <ToolSection
+    class='mb-5'
+    title='Environment'
+    tools={[
+      {
+        name: 'Arch Linux',
+        description: 'Linux Distribution',
+        href: 'https://archlinux.org/',
+        iconPath: 'archlinux'
+      },
+      {
+        name: 'Ubuntu 22.04 LTS',
+        description: 'Linux Distribution',
+        href: 'https://ubuntu.com/',
+        iconPath: 'ubuntu'
+      },
+      {
+        name: 'MacOS Sonoma',
+        description: 'MacBook Air',
+        href: 'https://www.apple.com/macos/',
+        iconPath: 'apple'
+      },
+      {
+        name: 'Windows 11',
+        description: 'Leigion Y7000P',
+        href: 'https://news.microsoft.com/windows11-general-availability/',
+        iconPath: 'windows11'
+      }
+    ]}
+  />
+  -->
+  <!--  
+  <h2 id='social-networks'>Social Networks</h2>
+  <p>
+    Lorem ipsum dolor sit amet, vidit suscipit at mei. Quem denique mea id. Usu ei regione indoctum
+    dissentiunt, cu meliore fuisset mei, vel quod voluptua ne.
+  </p>
+  <Substats />
+
+  <h2 id='gossips'>Gossips</h2>
+  <Collapse title='Lorem ipsum'>
+    Lorem ipsum dolor sit amet, vidit suscipit at mei. Quem denique mea id. Usu ei regione indoctum
+    dissentiunt, cu meliore fuisset mei, vel quod voluptua ne. Ex dicat impedit mel, at eum oratio
+    possit voluptatum.
+  </Collapse>
+
+-->
+  <!-- about-blog -->
+  <h2 id='about-blog'>About Theme</h2>
+  <Timeline
+    events={[
+      {
+        date: '2024-04-29',
+        content:
+          'Website refectered using <a href="https://astro.build/" target="_blank">Astro</a> and <a href="https://github.com/srleom/astro-theme-resume" target="_blank">Astro Theme Resume</a>'
+      },
+      {
+        date: '2024-07-26',
+        content:
+          'Website abstracted as a theme and published on <a href="https://github.com/cworld1/astro-theme-pure"target="_blank">Github</a>'
+      },
+      {
+        date: '2024-07-27',
+        content: 'Writed website docs'
+      }
+    ]}
+  />
+  <p>
+    The smooth operation and personalized customization of website also rely on the resources and
+    technical support provided by the following excellent projects/service providers:
+  </p>
+  <ul>
+    <li>
+      Framework & Theme: <a href='https://astro.build/' target='_blank'>Astro</a> + <a
+        href='https://github.com/cworld1/astro-theme-pure'
+        target='_blank'>Astro Theme Pure</a
+      >
+    </li>
+    <li>
+      Site hosting: <a href='https://vercel.com/' target='_blank'>Vercel</a>
+    </li>
+    <li>
+      CI/CD: <a href='https://vercel.com/workflow' target='_blank'>Vercel Workflow</a>
+    </li>
+    <!-- <li>资源加速：<a href='https://cdn.cbd.int/' target='_blank'>CBD CDN</a></li> -->
+    <li>Comment system：<a href='https://waline.js.org' target='_blank'>Waline</a></li>
+    <li>
+      Visits: <a href='https://supabase.com/' target='_blank'>Supabase</a> +
+      <a href='https://waline.js.org/' target='_blank'>Waline</a>
+    </li>
+    <li>
+      Follower statistics: <a href='https://github.com/spencerwooo/substats' target='_blank'
+        >Substats</a
+      >
+    </li>
+  </ul>
+  <Comment slot='bottom' />
+</PageLayout>
