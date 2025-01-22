@@ -1,5 +1,5 @@
 ---
-import { Footer, Header } from '../../packages/pure/components/basic'
+import { Footer, Header, ThemeProvider } from '../../packages/pure/components/basic'
 import type { SiteMeta } from 'astro-pure/types'
 import BaseHead from '@/components/BaseHead.astro'
 import logo from "/src/assets/ASLogoInteractiveFull.svg?raw"; 
@@ -68,6 +68,7 @@ const {
   <head>
     <LocaleRedirect />
     <BaseHead {articleDate} {description} {ogImage} {title} />
+    <ThemeProvider />
   </head>
 
   <body class='flex justify-center bg-background'>
@@ -82,15 +83,14 @@ const {
     }
     <div class='w-full max-w-[70rem] px-4 sm:px-7 lg:px-10'>
       <Header>
-        <div slot="branding">
-          <a
-            class='flex-none text-xl font-semibold transition-all duration-300 group-[.not-top]:ms-3 sm:group-[.not-top]:ms-5'
-            href={`/${lang}`}
-            aria-label='Brand'>
-              <Fragment set:html={logo} />
-          </a>
-        </div>
-        <div slot="extra-actions">
+        <a slot="branding"
+        class='z-30 text-xl font-semibold group-[.not-top]:ms-2 sm:group-[.not-top]:ms-3'
+        style='transition:margin-inline 0.3s'
+        href=`/${lang}`
+        aria-label='Brand'>
+            <Fragment set:html={logo} />
+        </a>
+        <div slot="extra-actions" class='flex w-full grow flex-row justify-end gap-x-3 sm:w-fit sm:gap-x-5'   >
           <LanguageSwitcher lang={lang} />
         </div>
       </Header>
