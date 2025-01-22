@@ -9,14 +9,9 @@ function removeDupsAndLowerCase(array: string[]) {
   return Array.from(distinctItems);
 }
 
-// Extract id (slug) without duplicated lang from the file path
-function extractId(filePath) {
-  const parsedPath = path.parse(filePath);
-  const parentFolder = path.basename(path.dirname(filePath));
-  return `${parentFolder}/${parsedPath.name}`;
-}
+type ImageLoader = () => z.ZodTypeAny;
 
-const blogPostSchema = ({ image }) =>
+const blogPostSchema = ({ image }: { image: ImageLoader }) =>
   z.object({
     // Required
     title: z.string().max(60),
@@ -53,4 +48,9 @@ const blog_en = defineCollection({
   schema: blogPostSchema
 })
 
-export const collections = { blog_es, blog_en }
+const blog = defineCollection({
+  // Dummy variable to solve the issue with the TypeScript of the packages referencing this
+  schema: blogPostSchema
+})
+
+export const collections = { blog_es, blog_en, blog }

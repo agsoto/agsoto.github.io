@@ -1,44 +1,34 @@
 ---
-import { Image } from 'astro:assets'
 
 import PageLayout from '@/layouts/BaseLayout.astro'
 import Section from '@/components/home/Section.astro'
-import Card from '@/components/Card.astro'
-import ProjectCard from '@/components/home/ProjectCard.astro'
-import Label from '@/components/home/Label.astro'
-import SkillLayout from '@/components/home/SkillLayout.astro'
-import Hitokoto from '@/components/home/Hitokoto.astro'
 import { PostPreview } from 'astro-pure/components/pages'
-import { Button, Icon } from 'astro-pure/user'
-import { config } from 'src/site-config.ts'
+import { Button } from 'astro-pure/user'
 import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
 
-import avatar from '@/assets/AbstractoWhite.png'
+export { getStaticPaths } from '@/utils/autoStaticPaths';
 
-const languages = ['Html', 'JavaScript', 'CSS', 'Shell']
-const frontend = ['TypeScript', 'Vite', 'Webpack', 'Astro']
-const backend = ['Vercel', 'Waline']
-
-
-
-export { getStaticPaths } from '../../utils/autoStaticPaths.ts';
-
-const lang = Astro.params?.lang || 'en';
+const lang: MyBilingualLang = Astro.params?.lang || 'en';
 
 const MAX_POSTS = 10
 const allPosts = await getBlogCollection(`blog_${lang}`)
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 
-const content = {
+const multiligualContent: {
+  en: { title: string; description: string };
+  es: { title: string; description: string };
+} = {
   en: { 
     title: 'Empowering visionary organizations with people-centered digital solutions.', 
     description: 'I am an Informatics Engineer with over 9 years of experience building systems that empower individuals and teams to achieve more with less. I am extremely grateful for the opportunities I have had to work on meaningful projects and collaborate with amazing people who strive to make a difference in the world. Software has always been my first passion, both as a discipline and an art. Over the years, this passion led me to discover my love for project management and align my personal philosophy and principles with the goals of social development.' },
   es: { title: 'Potenciando organizaciones visionarias con soluciones digitales centradas en las personas.', 
         description: 'Soy Ingeniero en Informática con más de 9 años de experiencia construyendo sistemas que empoderan a individuos y equipos para lograr más con menos. Estoy extremadamente agradecido por las oportunidades que he tenido de trabajar en proyectos significativos y colaborar con personas increíbles que buscan marcar la diferencia en el mundo. El software siempre ha sido mi primera pasión, tanto como disciplina como arte. Con el tiempo, esta pasión me llevó a descubrir mi amor por la gestión de proyectos y a alinear mi filosofía de vida y mis principios con los objetivos del desarrollo social.' }
-}[lang];
+};
+
+const content: { title: string; description: string } = multiligualContent[lang];
 ---
 
-<PageLayout meta={{ title: 'Home' }} highlightColor='#659EB966'>
+<PageLayout meta={{ title: 'Home' }} highlightColor='#659EB966' lang={lang}>
   <div class='flex w-full flex-col gap-y-10 md:w-4/5 lg:w-5/6'>
     <section class='animate flex flex-col items-center gap-y-7'>
 

@@ -5,6 +5,7 @@ import { PageInfo, TOC } from 'astro-pure/components/pages'
 import PageLayout from '@/layouts/ContentLayout.astro'
 
 interface Props {
+  lang: MyBilingualLang,
   title: string
   headings?: MarkdownHeading[]
   info?:
@@ -15,10 +16,10 @@ interface Props {
       }
 }
 
-const { title, headings, info, ...props } = Astro.props
+const { title, headings, info, lang, ...props } = Astro.props
 ---
 
-<PageLayout meta={{ title }} {...props}>
+<PageLayout meta={{ title }} lang={lang} {...props}>
   {headings?.length && <TOC headings={headings} slot='sidebar' />}
 
   <Fragment slot='header'>

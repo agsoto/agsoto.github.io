@@ -1,6 +1,13 @@
 ---
-import FlipCard from '@/components/about/FlipCard.astro'
-const { cardsData } = Astro.props; 
+import FlipCard from '@/components/about/FlipCard.astro';
+import type { FlipCardData } from '@/components/about/FlipCard.astro';
+
+
+interface Props {
+  cardsData: FlipCardData[];
+}
+
+const { cardsData }: { cardsData: FlipCardData[] } = Astro.props;
 ---
 
 <style>
