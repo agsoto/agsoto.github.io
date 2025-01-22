@@ -1,5 +1,5 @@
 <script>
-  const userLocale = navigator.language || navigator.userLanguage; // Browser locale
+  const userLocale = navigator.language; // Browser locale
   const supportedLocales = ['en', 'es']; // List of supported locales
   const defaultLocale = 'en'; // Fallback locale
 
@@ -9,7 +9,7 @@
   const currentLocale = supportedLocales.includes(pathParts[1]) ? pathParts[1] : null;
 
   // Function to determine the best match for the browser locale
-  function getBestLocale(locale) {
+  function getBestLocale(locale: string): string {
     const baseLocale = locale.split('-')[0]; // Extract base locale (e.g., 'en' from 'en-US')
     return supportedLocales.includes(baseLocale) ? baseLocale : defaultLocale;
   }

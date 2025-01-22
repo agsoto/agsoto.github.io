@@ -9,13 +9,13 @@ export const prerender = true
 
 export async function getStaticPaths() {
   // Define the languages you want to support
-  const supportedLangs = ['es', 'en'];
+  const supportedLangs: MyBilingualLang[] = ['es', 'en'];
 
   // Collect posts for each language
   const allPaths = [];
   for (const lang of supportedLangs) {
-    const posts = sortMDByDate(await getBlogCollection(`blog_${lang}`));
-    const paths = posts.map((post: CollectionEntry<`blog_en`>) => ({ //Using _en or _es with CollectionEntry is indiferent because the schema is the same
+    const posts = sortMDByDate(await getBlogCollection(`blog_${lang}`)) as CollectionEntry<`blog_en`>[]; // Explicit cast
+    const paths = posts.map((post) => ({
       params: { id: post.id, lang },
       props: { post, posts },
     }));
@@ -25,16 +25,17 @@ export async function getStaticPaths() {
   return allPaths;
 }
 
+
 type Props = {
   post: CollectionEntry<`blog_en`>
   posts: CollectionEntry<'blog_en'>[],
-  lang: string
+  lang: MyBilingualLang
 }
 
-const { post, posts } = Astro.props
+const { post, posts, lang } = Astro.props
 const { Content, headings, remarkPluginFrontmatter } = await render(post)
 ---
 
-<PostLayout {post} {posts} {headings} {remarkPluginFrontmatter}>
+<PostLayout lang={lang} {post} {posts} {headings} {remarkPluginFrontmatter}>
   <Content />
 </PostLayout>

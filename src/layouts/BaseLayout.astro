@@ -1,17 +1,11 @@
 ---
 import { Footer, Header } from '../../packages/pure/components/basic'
-import { Icon } from '../../packages/pure/components/user'
 import type { SiteMeta } from 'astro-pure/types'
 import BaseHead from '@/components/BaseHead.astro'
 import logo from "/src/assets/ASLogoInteractiveFull.svg?raw"; 
-import originalConfig from '@/site-config'
-// import Footer from '@/components/layout/Footer.astro'
-// import Header from '@/components/layout/Header.astro'
-// import  from '@/components/.astro'
-import type { SiteMeta } from '@/types'
 import LanguageSwitcher from '@/components/layout/LanguageSwitcher.astro';
 import LocaleRedirect from '../components/LocaleRedirect.astro';
-//
+
 // Static Lang Generation
 export async function getStaticPaths() {
   return [
@@ -21,7 +15,7 @@ export async function getStaticPaths() {
 }
 
 import config from 'virtual:config'
-const lang = Astro.params?.lang || 'en';
+const lang: MyBilingualLang = (Astro.params?.lang as MyBilingualLang) || 'en';
 
 config.header.menu = {
   es: [
@@ -61,7 +55,7 @@ import '@/assets/styles/app.css'
 interface Props {
   meta: SiteMeta
   highlightColor?: string,
-  lang: string
+  lang: MyBilingualLang
 }
 
 const {

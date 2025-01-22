@@ -1,8 +1,12 @@
 ---
-import ContactForm from '../../components/ContactForm.astro';
+import ContactForm from '../../../components/ContactForm.astro';
 import PageLayout from '@/layouts/CommonPage.astro';
+
+export { getStaticPaths } from '@/utils/autoStaticPaths';
+
+const lang: MyBilingualLang = (Astro.params?.lang as MyBilingualLang) || 'en';
 ---
-<PageLayout title='Contact' info='/contact'>
+<PageLayout lang={lang} title='Contact' info='/contact'>
   <h1 class="text-3xl font-bold mb-6">Get in Touch</h1>
   <ContactForm />
 </PageLayout>

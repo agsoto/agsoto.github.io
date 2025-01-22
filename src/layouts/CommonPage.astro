@@ -8,6 +8,7 @@ import PageLayout from '@/layouts/BaseLayout.astro'
 import { integ } from '@/site-config'
 
 interface Props {
+  lang: MyBilingualLang,
   title: string
   headings?: MarkdownHeading[]
   info?:
@@ -18,10 +19,10 @@ interface Props {
       }
 }
 
-const { title, headings, info, ...props } = Astro.props
+const { title, headings, info, lang, ...props } = Astro.props
 ---
 
-<PageLayout meta={{ title }} {...props}>
+<PageLayout meta={{ title }} lang={lang} {...props}>
   <Button title='Back' href='/' style='back' />
   <main class='mt-6 items-start gap-x-10 md:flex'>
     {

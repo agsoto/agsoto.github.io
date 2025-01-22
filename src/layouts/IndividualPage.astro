@@ -14,15 +14,16 @@ type Props = MarkdownLayoutProps<{
   language?: string
   back?: string
 }> & {
-  headings: MarkdownHeading[]
+  headings: MarkdownHeading[],
+  lang: MyBilingualLang
 }
 
-const { frontmatter, headings } = Astro.props
+const { frontmatter, headings, lang } = Astro.props
 const { title, description, heroImage, language, back } = frontmatter
 const socialImage = heroImage?.src ?? '/images/social-card.png'
 ---
 
-<PageLayout meta={{ title, description, ogImage: socialImage }}>
+<PageLayout meta={{ title, description, ogImage: socialImage }} lang={lang}>
   <Button title='Back' href={back ?? '/'} style='back' />
   <main class='mt-6 items-start gap-x-10 md:flex lg:mt-10'>
     {

@@ -1,22 +1,15 @@
 ---
 import { Image } from 'astro:assets'
-import Collapse from '@/components/Collapse.astro'
 import { Timeline } from 'astro-pure/user'
 import PageLayout from '@/layouts/CommonPage.astro'
 import { Comment } from 'astro-pure/advanced'
-import ToolSection from '@/components/about/ToolSection.astro'
 import FlipCards from '@/components/about/FlipCards.astro'
-import Button from '@/components/Button.astro'
-import Substats from '@/components/about/Substats.astro'
-import Spoiler from '@/components/Spoiler.astro'
-import { config } from 'src/site-config.ts'
-import Label from '@/components/home/Label.astro'
 
 import avatar from '@/assets/avatar.svg'
 
 export { getStaticPaths } from '../../../utils/autoStaticPaths.ts';
 
-const lang = Astro.params?.lang || 'en';
+const lang: MyBilingualLang = (Astro.params?.lang as MyBilingualLang) || 'en';
 
 const headings = [
   {
@@ -100,7 +93,7 @@ const cardsContent = {
 }[lang];
 ---
 
-<PageLayout title='About' headings={headings} info='/about'>
+<PageLayout title='About' headings={headings} info='/about' lang={lang}>
   
     <Image
       src={avatar}

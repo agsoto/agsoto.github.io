@@ -10,7 +10,7 @@
     "lib": ["es2022", "dom", "dom.iterable"],
     // Others
     "baseUrl": ".",
-    "strictNullChecks": true,
+    "strictNullChecks": true, 
     // Paths
     "paths": {
       "@/assets/*": ["src/assets/*"],
@@ -21,8 +21,13 @@
       "@/plugins/*": ["src/plugins/*"],
       "@/pages/*": ["src/pages/*"],
       "@/types": ["src/types/index.ts"],
+      "@/packages": ["packages/pure/*"],
       "@/site-config": ["src/site-config.ts"]
-    }
+    },
+    //TS errors on deployment 🙈
+    "strict": true,
+    "noImplicitAny": true,
+    "strictPropertyInitialization": true
   },
   "exclude": ["node_modules", "**/node_modules/*", ".vscode", "dist", "public/scripts/*", "test/*"]
 }

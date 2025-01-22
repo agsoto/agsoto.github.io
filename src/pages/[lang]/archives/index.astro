@@ -4,9 +4,13 @@ import { getBlogCollection, groupCollectionsByYear, sortMDByDate } from 'astro-p
 import { Button } from 'astro-pure/user'
 import PageLayout from '@/layouts/BaseLayout.astro'
 
+export { getStaticPaths } from '@/utils/autoStaticPaths';
+
 export const prerender = true
 
-const allPosts = await getBlogCollection()
+const lang: MyBilingualLang = (Astro.params?.lang as MyBilingualLang) || 'en';
+
+const allPosts = await getBlogCollection(`blog_${lang}`)
 const allPostsByDate = sortMDByDate(allPosts)
 const allPostsByYear = groupCollectionsByYear(allPostsByDate)
 
@@ -16,7 +20,7 @@ const meta = {
 }
 ---
 
-<PageLayout {meta}>
+<PageLayout {meta} lang={lang}>
   <Button title='Back' href='/blog' style='back' />
 
   <main class='mt-6 lg:mt-10'>
