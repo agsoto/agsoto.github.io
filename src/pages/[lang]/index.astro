@@ -55,7 +55,7 @@ const content = multiligualContent[lang];
       <p class='text-muted-foreground'>
         {content.description}
       </p>
-      <Button title={content.button_more_about} class='w-fit self-end' href=`${lang}/about` style='ahead' />
+      <Button title={content.button_more_about} class='w-fit self-end' href=`/${lang}/about` style='ahead' />
     </Section>
     {
       allPostsByDate.length > 0 && (
@@ -68,7 +68,7 @@ const content = multiligualContent[lang];
               </li>
             ))}
           </ul>
-          <Button title={content.button_posts} class='w-fit self-end' href=`${lang}/blog` style='ahead' />
+          <Button title={content.button_posts} class='w-fit self-end' href=`/${lang}/blog` style='ahead' />
         </Section>
       )
     }
