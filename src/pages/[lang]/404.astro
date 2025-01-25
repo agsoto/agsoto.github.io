@@ -1,7 +1,9 @@
 ---
 import { Button } from 'astro-pure/user'
 import PageLayout from '@/layouts/BaseLayout.astro'
-import vortex from "./../../public/icons/vortex.svg?raw"; 
+import vortex from "./../../../public/icons/vortex.svg?raw"; 
+
+export { getStaticPaths } from '../../utils/autoStaticPaths.ts';
 
 const meta = {
   description: 'Not found',
@@ -31,6 +33,6 @@ const content = {
     <h2 class='block text-5xl font-bold sm:text-7xl'>404</h2>
     <p class='mt-3 text-muted-foreground'>{content.mainMessage}</p>
     <p class='text-lg'>{content.subMessage}</p>
-    <Button title={{ es: 'Ir al inicio', en: 'Back to home'}[lang]} href=`/${lang}/blog` style='back' class="mt-4" />
+    <Button title={{ es: 'Ir al inicio', en: 'Back to home'}[lang]} href=`/${lang}/blog` style='back mt-4' class="mt-4"/>
   </div>
 </PageLayout>
