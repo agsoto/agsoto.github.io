@@ -10,7 +10,7 @@ import config from '@/site-config'
 
 export const prerender = true
 
-const lang: MyBilingualLang = Astro.props?.lang || 'en'; // Default language fallback
+const lang: MyBilingualLang = (Astro.params.lang as MyBilingualLang); // Default language fallback
 
 export const prod = import.meta.env.PROD
 
@@ -48,8 +48,7 @@ export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
 interface Props {
   page: Page<CollectionEntry<'blog_en'>>
   uniqueTags: string[]
-  collectionsCount: number,
-  lang: MyBilingualLang
+  collectionsCount: number
 }
 
 const { page, uniqueTags, collectionsCount } = Astro.props
@@ -73,27 +72,49 @@ const paginationProps = {
     }
   })
 }
+
+const content = {
+  en: {
+    noPosts: "No posts yet :(",
+    pagination: "Page {currentPage} - Showing {dataLength} of {collectionsCount} posts",
+    postsByYear: "View all posts by year →",
+    viewAllTags: "View all →"
+  },
+  es: {
+    noPosts: "No hay publicaciones aún :(",
+    pagination: "Página {currentPage} - Mostrando {dataLength} de {collectionsCount} publicaciones",
+    postsByYear: "Ver todas las publicaciones por año →",
+    viewAllTags: "Ver más →"
+  }
+}[lang];
+
+const paginationInfo = content.pagination
+  .replace("{currentPage}", page.currentPage.toString())
+  .replace("{dataLength}", page.data.length.toString())
+  .replace("{collectionsCount}", collectionsCount.toString());
+
 ---
 
 <PageLayout {meta} lang={lang}>
-  <Button title='Back' href='/' style='back' />
+  <Button title={{ es: 'Atrás', en: 'Back'}[lang]} href=`/${lang}` style='back' />
+  
   <main class='mt-6 lg:mt-10'>
     <div id='content-header' class='animate'>
       <h1 class='mb-6 mt-6 text-3xl font-medium sm:mt-10'>Blog</h1>
     </div>
     {
       page.data.length === 0 ? (
-        <p>No posts yet.</p>
+        <p>{content.noPosts}</p>
       ) : (
         <div class='grid gap-y-16 sm:grid-cols-[3fr_1fr] sm:gap-x-8'>
           <section aria-label='Blog posts list' class='animate' id='content'>
             {/* header */}
             <div class='mb-3 flex flex-col justify-between text-sm sm:mb-5 sm:flex-row'>
               <span class='text-muted-foreground'>
-                Page {page.currentPage} - Showing {page.data.length} of {collectionsCount} posts
+                {paginationInfo}
               </span>
-              <a aria-label='View all blog by years' href='/archives' data-astro-prefetch>
-                View all posts by years →
+              <a aria-label='View all blog by years' href=`/${lang}/archives` data-astro-prefetch>
+                {content.postsByYear}
               </a>
             </div>
             {/* posts */}
@@ -115,13 +136,13 @@ const paginationProps = {
               <ul class='text-bgColor flex flex-wrap gap-2'>
                 {uniqueTags.map((tag) => (
                   <li>
-                    <Button title={tag} href={`/tags/${tag}`} style='pill' />
+                    <Button title={tag} href={`/${lang}/tags/${tag}`} style='pill' />
                   </li>
                 ))}
               </ul>
               <span class='mt-4 block sm:text-end'>
-                <a aria-label='View all blog categories' href='/tags' data-astro-prefetch>
-                  View all →
+                <a aria-label='View all blog categories' href=`/${lang}/tags` data-astro-prefetch>
+                  {content.viewAllTags}
                 </a>
               </span>
             </aside>

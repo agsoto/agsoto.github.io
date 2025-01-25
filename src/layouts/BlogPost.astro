@@ -6,11 +6,13 @@ import type { CollectionEntry } from 'astro:content'
 import 'katex/dist/katex.min.css'
 
 import { Comment, MediumZoom } from 'astro-pure/advanced'
-import { ArticleBottom, BackToTop, Copyright, Hero, TOC } from 'astro-pure/components/pages'
+import { ArticleBottom, BackToTop, Copyright, Hero, TOC } from '../../packages/pure/components/pages'
 import { Button } from 'astro-pure/user'
 import { cn } from 'astro-pure/utils'
 import PageLayout from '@/layouts/BaseLayout.astro'
 import { integ } from '@/site-config'
+
+const lang: MyBilingualLang = (Astro.params?.lang as MyBilingualLang) || 'en';
 
 interface Props {
   lang: MyBilingualLang,
@@ -21,7 +23,6 @@ interface Props {
 }
 
 const {
-  lang,
   post: { id, data },
   posts,
   headings,
@@ -51,7 +52,7 @@ const primaryColor = data.heroImage?.color ?? 'hsl(var(--primary) / var(--tw-tex
   meta={{ articleDate, description, ogImage: socialImage, title }}
   highlightColor={primaryColor}
 >
-  <Button title='Back' href='/blog' style='back' />
+  <Button title={{ es: 'Atrás', en: 'Back'}[lang]} href=`/${lang}/blog` style='back' />
   <main class='mt-6 items-start gap-x-10 md:flex'>
     {
       !!headings.length && (

@@ -1,5 +1,5 @@
 ---
-import { PostPreview } from 'astro-pure/components/pages'
+import { PostPreview } from '../../../../packages/pure/components/pages'
 import { getBlogCollection, groupCollectionsByYear, sortMDByDate } from 'astro-pure/server'
 import { Button } from 'astro-pure/user'
 import PageLayout from '@/layouts/BaseLayout.astro'
@@ -14,18 +14,27 @@ const allPosts = await getBlogCollection(`blog_${lang}`)
 const allPostsByDate = sortMDByDate(allPosts)
 const allPostsByYear = groupCollectionsByYear(allPostsByDate)
 
+const content = {
+  en: {
+    title: "Archives"
+  },
+  es: {
+    title: "Archivos"
+  }
+}[lang];
+
 const meta = {
   description: 'A list of all the years of creating my posts',
-  title: 'Archives'
+  title: content.title
 }
 ---
 
 <PageLayout {meta} lang={lang}>
-  <Button title='Back' href='/blog' style='back' />
+  <Button title={{ es: 'Atrás', en: 'Back'}[lang]} href=`/${lang}/blog` style='back' />
 
   <main class='mt-6 lg:mt-10'>
     <div id='content-header' class='animate'>
-      <h1 class='mb-6 text-3xl font-medium'>Archives</h1>
+      <h1 class='mb-6 text-3xl font-medium'>{content.title}</h1>
     </div>
 
     {allPosts.length === 0 && <p>No posts yet.</p>}

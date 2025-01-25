@@ -23,7 +23,7 @@ const { title, headings, info, lang, ...props } = Astro.props
 ---
 
 <PageLayout meta={{ title }} lang={lang} {...props}>
-  <Button title='Back' href='/' style='back' />
+  <Button title={{ es: 'Atrás', en: 'Back'}[lang]} href=`/${lang}/blog` style='back' />
   <main class='mt-6 items-start gap-x-10 md:flex'>
     {
       !!headings?.length && (

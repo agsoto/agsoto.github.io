@@ -1,0 +1,76 @@
+---
+import PageLayout from '@/layouts/CommonPage.astro'
+
+export { getStaticPaths } from '../../utils/autoStaticPaths.ts';
+
+const lang: MyBilingualLang = (Astro.params?.lang as MyBilingualLang) || 'en';
+
+const content = {
+  en: { 
+    title: 'Credits', 
+    icons: 'Icons',
+    iconsDescription: 'The vast majority of the SVG graphics is the work of incredible designers that shared its work:',
+    infrastructure: 'Infrastructure',
+    infrastructureDescription: 'The smooth operation and customization of website also rely on the resources and technical support provided by the following excellent projects/service providers:'
+  },
+  es: { 
+    title: 'Créditos', 
+    icons: 'Iconos',
+    iconsDescription: 'La vasta mayoría de los gráficos SVG es fruto del increíble trabajo de diseñadores que comparten su trabajo:',
+    infrastructure: 'Infraestructura',
+    infrastructureDescription: 'El funcionamiento fluido y la personalización del sitio web también dependen de los recursos y el soporte técnico proporcionados por los siguientes excelentes proyectos/proveedores de servicios:'
+  }
+}[lang];
+
+const headings = [
+  {
+    depth: 2,
+    slug: 'icons',
+    text: content.icons
+  },
+  {
+    depth: 2,
+    slug: 'infrastructure',
+    text: content.infrastructure
+  }
+];
+---
+
+<PageLayout title={content.title} headings={headings} info='/credits' lang={lang}>
+  
+  <h2 id="icons">{content.icons}</h2>
+  <p>
+   {content.iconsDescription}
+  </p>
+  <ul>
+    <li>
+        westworld maze by Stuart O'Neil from <a href="https://thenounproject.com/browse/icons/term/westworld-maze/" target="_blank" title="westworld maze Icons">Noun Project</a> (CC BY 3.0)
+    </li>
+    <li>
+      vortex by Eliricon from <a href="https://thenounproject.com/browse/icons/term/vortex/" target="_blank" title="vortex Icons">Noun Project</a> (CC BY 3.0)
+    </li>
+  </ul>
+  <h2 id="Infrastructure">{content.infrastructure}</h2>
+  <p>
+    {content.infrastructureDescription}
+  </p>
+  <ul>
+    <li>
+      Framework & Theme: <a href='https://astro.build/' target='_blank'>Astro</a> + <a
+        href='https://github.com/cworld1/astro-theme-pure'
+        target='_blank'>Astro Theme Pure</a
+      >
+    </li>
+    <li>
+      Site hosting: <a href='https://pages.github.com/' target='_blank'>GitHub Pages</a>
+    </li>
+    <li>
+      CI/CD: <a href='https://docs.github.com/en/actions' target='_blank'>GitHub Actions</a>
+    </li>
+    <li>Comment system：<a href='https://waline.js.org' target='_blank'>Waline</a></li>
+    <li>
+      Visits: <a href='https://supabase.com/' target='_blank'>Supabase</a> +
+      <a href='https://waline.js.org/' target='_blank'>Waline</a>
+    </li>
+  </ul>
+</PageLayout>
