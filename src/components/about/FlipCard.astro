@@ -78,7 +78,11 @@ const { flipCardData }: { flipCardData: FlipCardData } = Astro.props;
   <div class="flip-card-inner">
     <div class="flip-card-front">
       <div>
-        <div class="icon">{flipCardData.icon}</div>
+        <div>
+          <svg width="64px" height="64px" viewBox="0 0 32 32" class="mx-auto">
+            <use href=`/icons/bundle.svg#${flipCardData.icon}` />
+          </svg>
+        </div>
         <div class="label">{flipCardData.label}</div>
       </div>
     </div>
