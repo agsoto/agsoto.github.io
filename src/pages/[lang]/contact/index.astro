@@ -1,12 +1,125 @@
 ---
-import ContactForm from '../../../components/ContactForm.astro';
+import MinimalTooltip from '../../../components/MinimalTooltip.astro';
 import PageLayout from '@/layouts/CommonPage.astro';
 
 export { getStaticPaths } from '@/utils/autoStaticPaths';
 
 const lang: MyBilingualLang = (Astro.params?.lang as MyBilingualLang) || 'en';
+
+const content = {
+  en: {
+    title: 'Contact',
+    headline: 'Let’s Navigate Humanity’s Mazes Together',
+    copy: 'Copy',
+    call: 'Call',
+    whatsapp: 'WhatsApp',
+    sendMail: 'Send Email'
+  },
+  es:{
+    title: 'Contacto',
+    headline: 'Naveguemos los laberintos de la humanidad juntos',
+    copy: 'Copiar',
+    call: 'Llamar',
+    whatsapp: 'WhatsApp',
+    sendMail: 'Enviar Correo'
+  }
+}[lang];
 ---
-<PageLayout lang={lang} title='Contact' info='/contact'>
-  <h1 class="text-3xl font-bold mb-6">Get in Touch</h1>
-  <ContactForm />
+<!-- TODO: Move buttons to its own component -->
+<PageLayout lang={lang} title={content.title} info='/contact'>
+  <h1 class="text-center text-2xl font-bold mb-12 italic">{content.headline}</h1>
+  
+  <div class="flex flex-col md:flex-row justify-center items-center gap-12">
+    <!-- Phone Section -->
+    <div class="flex flex-col items-center space-y-4">
+      <div class="text-4xl mb-2">
+        <svg width="64px" height="64px" viewBox="0 0 32 32" class="mx-auto">
+          <use href=`/icons/bundle.svg#pixel-phone` />
+        </svg>
+      </div>
+      <p class="text-center text-lg">(+57) 321 603 5307</p>
+      <div class="flex gap-2 mt-2">
+        <MinimalTooltip text={content.copy}>
+          <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+           data-copy-value='+573216035307' data-copy>
+            <svg width="16px" height="16px" viewBox="0 0 32 32" class="mx-auto">
+              <use href=`/icons/bundle.svg#copy` />
+            </svg>
+          </button>
+        </MinimalTooltip>
+        <MinimalTooltip text={content.call}>
+          <button onclick="window.open('tel:+573216035307', '_blank')" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+            <svg width="16px" height="16px" viewBox="0 0 32 32" class="mx-auto">
+              <use href=`/icons/bundle.svg#call` />
+            </svg>
+          </button>
+        </MinimalTooltip>
+        <MinimalTooltip text={content.whatsapp}>
+          <button onclick="window.open('https://wa.me/+573216035307', '_blank');" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+            <svg width="16px" height="16px" viewBox="0 0 32 32" class="mx-auto">
+              <use href=`/icons/bundle.svg#whatsapp` />
+            </svg>
+          </button>
+        </MinimalTooltip>
+      </div>
+    </div>
+  
+    <!-- Email Section -->
+    <div class="flex flex-col items-center space-y-4">
+      <div class="text-4xl mb-2">
+        <svg width="64px" height="64px" viewBox="0 0 32 32" class="mx-auto">
+          <use href=`/icons/bundle.svg#invitation` />
+        </svg>
+      </div>
+      <p id="email" class="text-center text-lg">andres.soto@sdas-group.com</p>
+      <div class="flex gap-2 mt-2">
+        <MinimalTooltip text={content.copy}>
+          <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+            data-copy-selector="#email" data-copy>
+            <svg width="16px" height="16px" viewBox="0 0 32 32" class="mx-auto">
+              <use href=`/icons/bundle.svg#copy` />
+            </svg>
+          </button>
+        </MinimalTooltip>
+        <MinimalTooltip text={content.sendMail}>
+          <button onclick="window.open('mailto:andres.soto@sdas-group.com', '_blank')" class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+            <svg width="16px" height="16px" viewBox="0 0 32 32" class="mx-auto">
+              <use href=`/icons/bundle.svg#send-mail` />
+            </svg>
+          </button>
+        </MinimalTooltip>
+      </div>
+    </div>
+  </div>
+  
 </PageLayout>
+
+<script>
+  import { showToast } from '../../../../packages/pure/utils'
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('button[data-copy]').forEach((button) => {
+      const selector = button.getAttribute('data-copy-selector');
+      const value = button.getAttribute('data-copy-value');
+
+      button.addEventListener('click', () => {
+        if (selector) {
+          const element: HTMLElement = document.querySelector(selector) as HTMLElement;
+          navigator.clipboard.writeText(element.textContent as string).then(() => {
+            showToast({ message: `<b>${element.textContent}</b> copied / copiado!` });
+          }).catch((err) => {
+            console.error('Failed to copy text: ', err);
+          });
+        }
+        else if(value) {
+          navigator.clipboard.writeText(value).then(() => {
+            showToast({ message: `<b>${value}</b> copied / copiado!` });
+          }).catch((err) => {
+            console.error('Failed to copy text: ', err);
+          });
+        }
+      });
+    });
+  });
+</script>
+
