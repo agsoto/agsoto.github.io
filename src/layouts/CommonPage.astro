@@ -1,7 +1,7 @@
 ---
 import type { MarkdownHeading } from 'astro'
 
-import { PageInfo, TOC } from 'astro-pure/components/pages'
+import { PageInfo, TOC } from '../../packages/pure/components/pages'
 import PageLayout from '@/layouts/ContentLayout.astro'
 
 interface Props {
@@ -20,7 +20,7 @@ const { title, headings, info, lang, ...props } = Astro.props
 ---
 
 <PageLayout meta={{ title }} lang={lang} {...props}>
-  {headings?.length && <TOC headings={headings} slot='sidebar' />}
+  {headings?.length && <TOC headings={headings} lang={lang} slot='sidebar' />}
 
   <Fragment slot='header'>
     <h1 class='text-2xl font-medium sm:mb-2 sm:text-3xl'>

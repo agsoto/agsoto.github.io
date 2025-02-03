@@ -14,7 +14,7 @@ export async function getStaticPaths() {
   ];
 }
 
-import config from 'virtual:config'
+import config from 'virtual:config' //Over writting the config file in order to maintain fork source compatibility
 const lang: MyBilingualLang = (Astro.params?.lang as MyBilingualLang) || 'en';
 
 config.header.menu = {
@@ -25,11 +25,11 @@ config.header.menu = {
     },
     {
       link: `/${lang}/about`,
-      title: 'Acerca.'
+      title: 'Acerca de.'
     },
     {
       link: `/${lang}/contact`,
-      title: 'Contacto.' // New link added
+      title: 'Contacto.'
     }
   ],
   en: [
@@ -43,10 +43,12 @@ config.header.menu = {
     },
     {
       link: `/${lang}/contact`,
-      title: 'Contact.' // New link added
+      title: 'Contact.' 
     }
   ]
 }[lang];
+
+config.description = { en: "Andrés` Personal Website to Know Himself", es: "Sitio web personal de Andrés para conocerse a sí mismo."}[lang];
 
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseLayout /> component.

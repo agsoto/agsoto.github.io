@@ -6,17 +6,20 @@ import TOCHeading from './TOCHeading.astro'
 
 interface Props {
   headings: MarkdownHeading[]
-  class?: string
-  id?: string
+  class?: string,
+  id?: string,
+  lang: MyBilingualLang
 }
 
-const { headings, class: className, ...props } = Astro.props
+const { headings, class: className, lang, ...props } = Astro.props
+
+const tocLocalizedName = { es: "Tabla de contenido", en: "Table of Content"}[lang];
 
 const toc = generateToc(headings)
 ---
 
 <toc-heading class={className} {...props}>
-  <h2 class='font-semibold'>TABLE OF CONTENTS</h2>
+  <h2 class='font-semibold'>{tocLocalizedName}</h2>
   <ul class='mt-4 text-card-foreground'>
     {toc.map((heading) => <TOCHeading heading={heading} />)}
   </ul>
