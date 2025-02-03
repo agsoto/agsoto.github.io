@@ -6,6 +6,7 @@ import { PostPreview } from '../../../packages/pure/components/pages'
 import { Button } from 'astro-pure/user'
 import { getBlogCollection, sortMDByDate } from 'astro-pure/server'
 import maze from "../../../public/icons/ww-maze.svg?raw"; 
+import { connect } from 'http2'
 
 export { getStaticPaths } from '@/utils/autoStaticPaths';
 
@@ -17,16 +18,18 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
 
 const multiligualContent = {
   en: { 
-    title: 'Empowering visionary organizations with people-centered digital solutions.', 
-    description: 'I am an Informatics Engineer with over 9 years of experience building systems that empower individuals and teams to achieve more with less. I am extremely grateful for the opportunities I have had to work on meaningful projects and collaborate with amazing people who strive to make a difference in the world. Software has always been my first passion, both as a discipline and an art. Over the years, this passion led me to discover my love for project management and align my personal philosophy and principles with the goals of social development.',
+    home: 'Home',
+    title: 'Empowering communities and visionary organizations with people-centered digital solutions.', 
+    description: "I'm driven by the transformative potential of knowledge to reshape our lives and our world. Over the past decade, I've been contributing to the development of platforms—from helping shape ideas to measuring their impact—engaging with every phase of the software lifecycle. I think that, in the midst of the AI revolution, it's more important than ever that we shape the future collectively. While large tech companies may have the resources to make pivotal decisions, we must champion a balance between open-source initiatives and fair, inclusive regulations to ensure disruptive technology benefits everyone equitably. The foundation we set today will determine whether our intelligent systems rule or serve society tomorrow.",
     about: 'About',
     posts: 'Posts',
     button_more_about: 'Know more',
     button_posts: 'All posts'
   },
-  es: { 
-    title: 'Potenciando organizaciones visionarias con soluciones digitales centradas en las personas.', 
-    description: 'Soy Ingeniero en Informática con más de 9 años de experiencia construyendo sistemas que empoderan a individuos y equipos para lograr más con menos. Estoy extremadamente agradecido por las oportunidades que he tenido de trabajar en proyectos significativos y colaborar con personas increíbles que buscan marcar la diferencia en el mundo. El software siempre ha sido mi primera pasión, tanto como disciplina como arte. Con el tiempo, esta pasión me llevó a descubrir mi amor por la gestión de proyectos y a alinear mi filosofía de vida y mis principios con los objetivos del desarrollo social.',
+  es: {
+    home: 'Inicio',
+    title: 'Potenciando comunidades y organizaciones visionarias con soluciones digitales centradas en las personas.', 
+    description: 'Me motiva la capacidad transformadora del conocimiento para cambiar nuestras vidas y nuestro mundo. Durante la última década, he contribuido al desarrollo de plataformas, desde ayudar a dar forma a las ideas hasta medir su impacto, participando en todas las fases del ciclo de vida del software. Creo que, en plena revolución de la IA, es más importante que nunca forjar el futuro colectivamente. Aunque las grandes empresas tecnológicas pueden tener los recursos para tomar decisiones cruciales, debemos defender un equilibrio entre las iniciativas de código abierto y las normativas justas e inclusivas para garantizar que la tecnología disruptiva beneficie a todos de forma equitativa. Los cimientos que establezcamos hoy determinarán si nuestros sistemas inteligentes gobernarán o servirán mañana a la sociedad.',
     about: 'Sobre mí',
     posts: 'Publicaciones',
     button_more_about: 'Saber más',
@@ -37,7 +40,7 @@ const multiligualContent = {
 const content = multiligualContent[lang];
 ---
 
-<PageLayout meta={{ title: 'Home' }} highlightColor='#659EB966' lang={lang}>
+<PageLayout meta={{ title: content.home }} highlightColor='#659EB966' lang={lang}>
   <div class='flex w-full flex-col gap-y-10 md:w-4/5 lg:w-5/6 mx-auto'>
     <div>
       <Fragment style="margin: auto;" set:html={maze} />
@@ -51,7 +54,6 @@ const content = multiligualContent[lang];
     </section>
 
     <Section title={content.about}>
-      <p class='text-muted-foreground'>Technical Project Manager</p>
       <p class='text-muted-foreground'>
         {content.description}
       </p>

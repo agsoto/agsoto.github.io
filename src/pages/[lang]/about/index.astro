@@ -13,19 +13,21 @@ const lang: MyBilingualLang = (Astro.params?.lang as MyBilingualLang) || 'en';
 const content = {
   en: { 
     title: 'About', 
-    description: "I’m passionate about knowledge and its power to transform lives. Over the past decade, I have been deeply involved in creating platforms, contributing from the initial idea to validating their impact, and covering every stage of the software lifecycle. While my background is primarily technical, I have also brought together the efforts of multidisciplinary teams to drive successful technological initiatives.",
+    description: 'I am an Informatics Engineer with over 9 years of experience building systems that empower individuals and teams to achieve more with less. I am profoundly grateful for the opportunities I have had to work on meaningful projects and collaborate with amazing people who strive to make a difference in the world. Software has always been my first passion, both as a discipline and an art. Over the years, this passion led me to discover my love for project management and align my personal interests and principles with the goals of social development.  My technical background has been crucial as a Project Manager, helping brought together the efforts of multidisciplinary teams to drive successful technological initiatives.',
     me: 'Me',
     corePhilosophies: 'Core Philosophies',
     experience: 'Experience',
-    education: 'Education'
+    education: 'Education',
+    present: 'Present'
   },
   es: { 
     title: 'Acerca de', 
-    description: 'Me apasiona el conocimiento y su poder para transformar vidas. Durante la última década, he estado profundamente involucrado en la creación de plataformas, contribuyendo desde la idea inicial hasta la validación de su impacto, y abarcando todas las etapas del ciclo de vida del software. Aunque mi formación es principalmente técnica, también he unido los esfuerzos de equipos multidisciplinarios para impulsar iniciativas tecnológicas exitosas.',
+    description: 'Soy Ingeniero en Informática con más de 9 años de experiencia construyendo sistemas que empoderan a individuos y equipos para lograr más con menos. Estoy profundamente agradecido por las oportunidades que he tenido de trabajar en proyectos significativos y colaborar con personas increíbles que buscan marcar la diferencia en el mundo. El software siempre ha sido mi primera pasión, tanto como disciplina como arte. Con el tiempo, esta pasión me llevó a descubrir mi gusto por la gestión de proyectos y a alinear mis intereses de vida y principios con los objetivos del desarrollo social. Mi experiencia técnica ha sido crucial como Gestor de Proyectos, ayudando a unir esfuerzos de equipos multidisciplinarios para impulsar iniciativas tecnológicas exitosas.',
     me: 'Mi',
     corePhilosophies: 'Filosofías centrales',
     experience: 'Experiencia',
-    education: 'Educación'
+    education: 'Educación',
+    present: 'Actual'
   }
 }[lang];
 
@@ -44,6 +46,11 @@ const headings = [
     depth: 2,
     slug: 'education',
     text: content.education
+  },
+  {
+    depth: 2,
+    slug: 'experience',
+    text: content.experience
   }
 ]
 
@@ -102,6 +109,7 @@ const cardsContent = {
       loading='eager'
     />
   <h2 id='me'>{content.me}</h2>
+  <p class='text-muted-foreground'>Technical Project Manager</p>
   <p>
     {content.description}
   </p>
@@ -117,14 +125,63 @@ const cardsContent = {
       {
         date: '2020',
         content:
-          'Ingeniería Informática - Corporación Universitaria Autónoma de Nariño'
+          'Ingeniería Informática - <a href="https://www.aunar.edu.co/" target="_blank">Corporación Universitaria Autónoma de Nariño</a>'
       },
       {
         date: '2015',
-        content: 'Tecnología en Computación - Universidad de Nariño'
+        content: 'Tecnología en Computación - <a href="https://www.udenar.edu.co/" target="_blank">Universidad de Nariño</a>'
       }
     ]}
   />
   
+  <h2 id='experience'>{content.experience}</h2>
+  <Timeline
+    events={[
+      {
+        date: `2021 - 📍${content.present}`,
+        content:
+          '<b>Software Research Engineer</b> / <a href="https://www.sdas-group.com" target="_blank">SDAS Group</a> - Bogotá'
+      },
+      {
+        date: '2022 - 2024 ',
+        content:
+          '<b>Software Project Manager</b> / <a href="https://www.k11.technology" target="_blank">K11 Technologies</a> - Bogotá'
+      },
+      {
+        date: '2021 - 2022 ',
+        content:
+          '<b>Lead Developer</b> / <a href="https://www.k11.technology" target="_blank">K11 Technologies</a> - Bogotá'
+      },
+      {
+        date: '2020 - 2021 ',
+        content:
+          '<b>Lead Developer</b> / <a href="https://www.worldbank.org/" target="_blank">World Bank Group</a> - Bogotá'
+      },
+      {
+        date: '2019 - 2020 ',
+        content:
+          '<b>Full-stack Software Developer</b> / <a href="https://www.worldbank.org/" target="_blank">World Bank Group</a> (Logika+) - Bogotá'
+      },
+      {
+        date: '2017 - 2018 ',
+        content:
+          '<b>Full-stack Software Developer</b> / <a href="https://farmaciamagistral.com.co/" target="_blank">Farmacia Magistral</a> (Logika+) - Bogotá'
+      },
+      {
+        date: '2016 - 2017 ',
+        content:
+          '<b>Web Develper</b> / <a href="https://www.capitalaires.com/" target="_blank">Capitalaires</a> - Bogotá'
+      },
+      {
+        date: '2016 - 2016 ',
+        content:
+          '<b>Freelance Web Develper</b> / Blessing GYM - Cali'
+      },
+      {
+        date: '2015 - 2016',
+        content: '<b>Software Developer</b> / <a href="https://previred.com.co/" target="_blank">Previred</a> - Pasto'
+      }
+    ]}
+  />
 
 </PageLayout>
