@@ -8,7 +8,6 @@ import AstroPureIntegration from 'astro-pure'
 import { defineConfig } from 'astro/config'
 import rehypeKatex from 'rehype-katex'
 import remarkMath from 'remark-math'
-import path from 'path';
 import UnoCSS from 'unocss/astro'
 
 // Others
@@ -27,7 +26,7 @@ import {
   transformerNotationHighlight,
   updateStyle
 } from './src/plugins/shiki-transformers.ts'
-import config from './src/site-config.ts'
+import config from './src/site.config.ts'
 
 // https://astro.build/config
 export default defineConfig({
@@ -114,11 +113,11 @@ export default defineConfig({
     // svg: true
   },
   vite: {
-    resolve: {
-      alias: {
-        '@': path.resolve('./src')
-      },
-    }
+    // resolve: {
+    //   alias: {
+    //     '@': path.resolve('./src')
+    //   },
+    // }
     // plugins: [
     //   visualizer({
     //     emitFile: true,

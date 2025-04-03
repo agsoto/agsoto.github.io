@@ -1,6 +1,7 @@
 ---
+import type { SiteMeta } from 'astro-pure/types';
 import MinimalTooltip from '../../../components/MinimalTooltip.astro';
-import PageLayout from '@/layouts/CommonPage.astro';
+import PageLayout from '@/layouts/BaseLayout.astro';
 
 export { getStaticPaths } from '@/utils/autoStaticPaths';
 
@@ -24,9 +25,9 @@ const content = {
     sendMail: 'Enviar Correo'
   }
 }[lang];
+const meta: SiteMeta = {title: content.title};
 ---
-<!-- TODO: Move buttons to its own component -->
-<PageLayout lang={lang} title={content.title} info='/contact'>
+<PageLayout lang={lang} meta={meta}>
   <h1 class="text-center text-2xl font-bold mb-12 italic">{content.headline}</h1>
   
   <div class="flex flex-col md:flex-row justify-center items-center gap-12">

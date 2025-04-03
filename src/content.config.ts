@@ -1,5 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders'
+import type { SchemaContext } from 'astro:content';
 
 // Utility function to remove duplicates and normalize tags
 function removeDupsAndLowerCase(array: string[]) {
@@ -9,9 +10,7 @@ function removeDupsAndLowerCase(array: string[]) {
   return Array.from(distinctItems);
 }
 
-type ImageLoader = () => z.ZodTypeAny;
-
-const blogPostSchema = ({ image }: { image: ImageLoader }) =>
+const blogPostSchema = ({ image }: SchemaContext) =>
   z.object({
     // Required
     title: z.string().max(60),
@@ -23,6 +22,9 @@ const blogPostSchema = ({ image }: { image: ImageLoader }) =>
       .object({
         src: image(),
         alt: z.string().optional(),
+        inferSize: z.boolean().optional(),
+        width: z.number().optional(),
+        height: z.number().optional(),
         color: z.string().optional()
       })
       .optional(),

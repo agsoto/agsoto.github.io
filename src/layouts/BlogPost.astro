@@ -6,9 +6,10 @@ import type { CollectionEntry } from 'astro:content'
 import 'katex/dist/katex.min.css'
 
 import { Comment, MediumZoom } from 'astro-pure/advanced'
-import { ArticleBottom, BackToTop, Copyright, Hero, TOC } from '../../packages/pure/components/pages'
-import PageLayout from '@/layouts/BaseLayout.astro'
+import { ArticleBottom, Copyright, TOC } from '../../packages/pure/components/pages'
+import PageLayout from '@/layouts/ContentLayout.astro'
 import { integ } from '@/site-config'
+import { Hero } from 'astro-pure/components/pages'
 
 const lang: MyBilingualLang = (Astro.params?.lang as MyBilingualLang) || 'en';
 
@@ -51,7 +52,7 @@ const primaryColor = data.heroImage?.color ?? 'hsl(var(--primary) / var(--un-tex
   highlightColor={primaryColor}
   back='/blog'
 >
-  {!!headings.length && <TOC {headings} slot='sidebar' />}
+  {!!headings.length && <TOC {headings} lang={lang} slot='sidebar' />}
 
   <Hero {data} {remarkPluginFrontmatter} slot='header' />
 
