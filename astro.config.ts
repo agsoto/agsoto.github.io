@@ -1,13 +1,10 @@
 import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 import vercel from '@astrojs/vercel'
-import AstroPureIntegration from './packages/pure'
 import { defineConfig } from 'astro/config'
 import rehypeKatex from 'rehype-katex'
 import remarkMath from 'remark-math'
 
-// Others
-// import { visualizer } from 'rollup-plugin-visualizer'
-const DEFAULT_LOCALE = 'en'
+import AstroPureIntegration from './packages/pure'
 // Local integrations
 // Local rehype & remark plugins
 import rehypeAutolinkHeadings from './src/plugins/rehype-auto-link-headings.ts'
@@ -21,6 +18,10 @@ import {
   updateStyle
 } from './src/plugins/shiki-transformers.ts'
 import config from './src/site.config.ts'
+
+// Others
+// import { visualizer } from 'rollup-plugin-visualizer'
+const DEFAULT_LOCALE = 'en'
 
 // https://astro.build/config
 export default defineConfig({
@@ -110,11 +111,8 @@ export default defineConfig({
       // zh: DEFAULT_LOCALE
     },
     routing: {
-      fallbackType: "rewrite",
+      fallbackType: 'rewrite'
     }
-  },
-  redirects: {
-    [`/${DEFAULT_LOCALE}`]: '/',                                // /en  -> /
   },
   vite: {
     plugins: [
