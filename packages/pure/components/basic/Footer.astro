@@ -12,7 +12,7 @@ let social = footerConf.social || {}
 // If the list does not contain rss, add it
 social.rss = {
   label: 'RSS',
-  url: '/rss.xml'
+  url: getRelativeLocaleUrl(Astro.currentLocale as string, '/rss.xml')
 }
 
 const footerLink1 = footerConf.links?.filter(({ pos }) => pos === 1) || []
