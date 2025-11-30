@@ -118,11 +118,10 @@ export default defineConfig({
     ]
   },
   i18n: {
-    locales: [DEFAULT_LOCALE, 'zh', 'es'],
+    locales: [DEFAULT_LOCALE, 'es'],
     defaultLocale: DEFAULT_LOCALE,
     fallback: {
-      // es: DEFAULT_LOCALE,
-      // zh: DEFAULT_LOCALE
+      es: DEFAULT_LOCALE
     },
     routing: {
       fallbackType: 'rewrite'

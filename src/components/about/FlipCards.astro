@@ -1,0 +1,32 @@
+---
+import FlipCard from '@/components/about/FlipCard.astro';
+import type { FlipCardData } from '@/components/about/FlipCard.astro';
+
+
+interface Props {
+  cardsData: FlipCardData[];
+}
+
+const { cardsData }: { cardsData: FlipCardData[] } = Astro.props;
+---
+
+<style>
+  .flip-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+  }
+
+  .flip-cards-container > div {
+    display: flex;
+    justify-content: center;
+  }
+</style>
+
+<div class="flip-cards-container">
+  {cardsData.map((card) => (
+    <FlipCard flipCardData={card} />
+  ))}
+</div>

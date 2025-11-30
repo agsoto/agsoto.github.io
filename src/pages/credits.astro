@@ -1,0 +1,106 @@
+---
+import PageLayout from '@/layouts/CommonPage.astro'
+
+export { getLangStaticPaths as getStaticPaths } from 'astro-pure/server';
+
+const lang = (Astro.currentLocale || 'en') as 'en' | 'es'
+
+const contentMap = {
+  en: {
+    title: 'Credits',
+    icons: 'Icons',
+    iconsDescription:
+      'The vast majority of the SVG graphics is the work of incredible designers that shared its work:',
+    infrastructure: 'Infrastructure',
+    infrastructureDescription:
+      'The smooth operation and customization of website also rely on the resources and technical support provided by the following excellent projects/service providers:'
+  },
+  es: {
+    title: 'Créditos',
+    icons: 'Iconos',
+    iconsDescription:
+      'La vasta mayoría de los gráficos SVG es fruto del increíble trabajo de diseñadores que comparten su trabajo:',
+    infrastructure: 'Infraestructura',
+    infrastructureDescription:
+      'El funcionamiento fluido y la personalización del sitio web también dependen de los recursos y el soporte técnico proporcionados por los siguientes excelentes proyectos/proveedores de servicios:'
+  }
+} as const
+
+const content = contentMap[lang] ?? contentMap.en
+
+const headings = [
+  {
+    depth: 2,
+    slug: 'icons',
+    text: content.icons
+  },
+  {
+    depth: 2,
+    slug: 'infrastructure',
+    text: content.infrastructure
+  }
+];
+---
+
+<PageLayout title={content.title} headings={headings}>
+  
+  <h2 id="icons">{content.icons}</h2>
+  <p>
+   {content.iconsDescription}
+  </p>
+  <ul>
+    <li>
+      send by iconbysonny from <a href="https://thenounproject.com/browse/icons/term/send/" target="_blank" title="send Icons">Noun Project</a> (CC BY 3.0)
+    </li>
+    <li>
+      call by iconlabs from <a href="https://thenounproject.com/browse/icons/term/call/" target="_blank" title="call Icons">Noun Project</a> (CC BY 3.0)
+    </li>
+    <li>
+      paste by Sophia from <a href="https://thenounproject.com/browse/icons/term/paste/" target="_blank" title="paste Icons">Noun Project</a> (CC BY 3.0)
+    </li>
+    <li>
+      Mail by Barracuda from <a href="https://thenounproject.com/browse/icons/term/mail/" target="_blank" title="Mail Icons">Noun Project</a> (CC BY 3.0) (CC BY 3.0)
+    </li>
+    <li>
+      Smartphone by Komardews from <a href="https://thenounproject.com/browse/icons/term/smartphone/" target="_blank" title="Smartphone Icons">Noun Project</a> (CC BY 3.0)
+    </li>
+    <li>
+      whatsapp by sureya from <a href="https://thenounproject.com/browse/icons/term/whatsapp/" target="_blank" title="whatsapp Icons">Noun Project</a> (CC BY 3.0)
+    </li>
+    <li>
+      Search by Alice Design from <a href="https://thenounproject.com/browse/icons/term/search/" target="_blank" title="Search Icons">Noun Project</a> (CC BY 3.0)
+    </li>
+    <li>
+      Neural Network by Laymik from <a href="https://thenounproject.com/browse/icons/term/neural-network/" target="_blank" title="Neural Network Icons">Noun Project</a> (CC BY 3.0)
+    </li>
+    <li>
+      Yin & yang by ARI NOFIANA from <a href="https://thenounproject.com/browse/icons/term/yin-yang/" target="_blank" title="Yin & yang Icons">Noun Project</a> (CC BY 3.0)
+    </li>
+    <li>
+      vortex by Eliricon from <a href="https://thenounproject.com/browse/icons/term/vortex/" target="_blank" title="vortex Icons">Noun Project</a> (CC BY 3.0)
+    </li>
+  </ul>
+  <h2 id="Infrastructure">{content.infrastructure}</h2>
+  <p>
+    {content.infrastructureDescription}
+  </p>
+  <ul>
+    <li>
+      Framework & Theme: <a href='https://astro.build/' target='_blank'>Astro</a> + <a
+        href='https://github.com/cworld1/astro-theme-pure'
+        target='_blank'>Astro Theme Pure</a
+      >
+    </li>
+    <li>
+      Site hosting: <a href='https://pages.github.com/' target='_blank'>GitHub Pages</a>
+    </li>
+    <li>
+      CI/CD: <a href='https://docs.github.com/en/actions' target='_blank'>GitHub Actions</a>
+    </li>
+    <li>Comment system：<a href='https://waline.js.org' target='_blank'>Waline</a></li>
+    <li>
+      Visits: <a href='https://supabase.com/' target='_blank'>Supabase</a> +
+      <a href='https://waline.js.org/' target='_blank'>Waline</a>
+    </li>
+  </ul>
+</PageLayout>

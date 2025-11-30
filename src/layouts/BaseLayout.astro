@@ -4,11 +4,13 @@ import { ensureContentI18nLoaded } from 'astro-pure/server'
 import type { SiteMeta } from 'astro-pure/types'
 import BaseHead from '@/components/BaseHead.astro'
 import config from '@/site-config'
+import logo from "/src/assets/AGSMinimalLogoInteractive.svg?raw"; 
 
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseLayout /> component.
 import '@/assets/styles/global.css'
 import '@/assets/styles/app.css'
+import { getRelativeLocaleUrl } from 'astro:i18n'
 
 interface Props {
   meta: SiteMeta
@@ -31,6 +33,7 @@ await ensureContentI18nLoaded(Astro.currentLocale as string)
   </head>
 
   <body class='flex justify-center bg-background text-foreground' {...props}>
+    <slot name='background' />
     {
       highlightColor && (
         <div
@@ -43,11 +46,25 @@ await ensureContentI18nLoaded(Astro.currentLocale as string)
     <div
       class='w-full max-w-[70rem] px-4 sm:px-7 lg:px-10 min-h-[100dvh] flex flex-col justify-between'
     >
-      <Header />
+      <Header>
+        <a slot="branding"
+        class='z-30 text-xl font-semibold group-[.not-top]:ms-2 sm:group-[.not-top]:ms-3'
+        style='transition:margin-inline 0.3s'
+        href={`${getRelativeLocaleUrl(Astro.currentLocale as string)}`}
+        aria-label='Brand'>
+            <Fragment set:html={logo} />
+        </a>
+      </Header>
       <div class='flex-1 w-full'>
         <slot />
       </div>
-      <Footer />
+      <Footer>
+        <div slot='footer-links'>
+          <span slot="copyright">
+            <p class=''>🌱 by <a href={`${getRelativeLocaleUrl(Astro.currentLocale as string, '/credits')}`}>awesome people</a> & me.</p>
+          </span>
+        </div>
+      </Footer>
     </div>
 
     {/* Set highlight color */}

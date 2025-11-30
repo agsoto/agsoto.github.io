@@ -1,13 +1,13 @@
 import type { CardListData, Config, IntegrationUserConfig, ThemeUserConfig } from 'astro-pure/types'
 
 export const theme: ThemeUserConfig = {
-  // === Basic configuration ===
+  /// === Basic configuration ===
   /** Title for your website. Will be used in metadata and as browser tab title. */
-  title: 'Astro Theme Pure',
+  title: 'AGSoto',
   /** Will be used in index page & copyright declaration */
-  author: 'Pure Lab',
+  author: 'Andrés Soto',
   /** Description metadata for your website. Can be used in page metadata. */
-  description: 'Stay hungry, stay foolish',
+  description: 'Personal website to know myself through writing.',
   /** The default favicon for your site which should be a path to an image in the `public/` directory. */
   favicon: '/favicon/favicon.ico',
   /** The default social card image for your site which should be a path to an image in the `public/` directory. */
@@ -57,25 +57,14 @@ export const theme: ThemeUserConfig = {
     // ],
     menu:{ 
       en: [
-        { title: 'Blog', link: '/blog' },
-        { title: 'Docs', link: '/docs' },
-        { title: 'Projects', link: '/projects' },
-        { title: 'Links', link: '/links' },
-        { title: 'About', link: '/about' }
+        { title: 'Blog.', link: '/blog' },
+        { title: 'About.', link: '/about' },
+        { title: 'Contact me.', link: '/contact' }
       ],
       es: [
-        { title: 'Blog', link: '/blog' },
-        { title: 'Docs', link: '/docs' },
-        { title: 'Proyectos', link: '/projects' },
-        { title: 'Links', link: '/links' },
-        { title: 'Acerca de', link: '/about' }
-      ],
-      zh: [
-        { title: '博客', link: '/blog' },
-        { title: '文档', link: '/docs' },
-        { title: '项目', link: '/projects' },
-        { title: '链接', link: '/links' },
-        { title: '关于', link: '/about' }
+        { title: 'Blog.', link: '/blog' },
+        { title: 'Acerca de.', link: '/about' },
+        { title: 'Contáctame.', link: '/contact' }
       ]
     }
   },
@@ -107,7 +96,7 @@ export const theme: ThemeUserConfig = {
     /** Enable displaying a “Astro & Pure theme powered” link in your site’s footer. */
     credits: true,
     /** Optional details about the social media accounts for this site. */
-    social: { github: 'https://github.com/cworld1/astro-theme-pure' }
+    social: { github: 'https://github.com/agsoto/' }
   },
 
   content: {
@@ -228,3 +217,4 @@ export const terms: CardListData = {
 
 const config = { ...theme, integ } as Config
 export default config
+export { personalInfo } from './personal.info.ts'
