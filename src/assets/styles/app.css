@@ -1,9 +1,9 @@
 /* Theme */
 :root {
   /* Primary */
-  --primary: 200 29% 45%;
+  --primary: 275.68deg 65.34% 35.99%;
   /* Foreground */
-  --foreground: 240 10% 3.9%;
+  --foreground: 225 13% 24%;
   --muted-foreground: 240 3.8% 28.1%;
   /* Background */
   --background: 210 33% 99%;
@@ -18,7 +18,7 @@
 }
 .dark {
   /* Primary */
-  --primary: 195 95% 85%;
+  --primary: 278.68deg 25% 60%;
   /* Foreground */
   --foreground: 0 0% 98%;
   --muted-foreground: 240 5% 74.9%;

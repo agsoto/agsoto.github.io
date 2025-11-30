@@ -1,0 +1,164 @@
+---
+import { Image } from 'astro:assets'
+import { Timeline } from 'astro-pure/user'
+import PageLayout from '@/layouts/CommonPage.astro'
+import FlipCards from '@/components/about/FlipCards.astro'
+import type { FlipCardData } from '@/components/about/FlipCard.astro'
+
+import avatar from '@/assets/avatar.svg'
+
+export { getLangStaticPaths as getStaticPaths } from 'astro-pure/server';
+
+const lang = (Astro.currentLocale || 'en') as 'en' | 'es'
+
+const contentMap = {
+  en: {
+    title: 'About',
+    description:
+      'I am an Informatics Engineer with over 9 years of experience building systems that empower individuals and teams to achieve more with less. I am profoundly grateful for the opportunities I have had to work on meaningful projects and collaborate with amazing people who strive to make a difference in the world. Software has always been my first passion, both as a discipline and an art. Over the years, this passion led me to discover my love for project management and align my personal interests and principles with the goals of social development.  My technical background has been crucial as a Project Manager, helping brought together the efforts of multidisciplinary teams to drive successful technological initiatives.',
+    me: 'Me',
+    corePhilosophies: 'Core Philosophies',
+    experience: 'Experience',
+    education: 'Education',
+    present: 'Present'
+  },
+  es: {
+    title: 'Acerca de',
+    description:
+      'Soy Ingeniero en Informática con más de 9 años de experiencia construyendo sistemas que empoderan a individuos y equipos para lograr más con menos. Estoy profundamente agradecido por las oportunidades que he tenido de trabajar en proyectos significativos y colaborar con personas increíbles que buscan marcar la diferencia en el mundo. El software siempre ha sido mi primera pasión, tanto como disciplina como arte. Con el tiempo, esta pasión me llevó a descubrir mi gusto por la gestión de proyectos y a alinear mis intereses de vida y principios con los objetivos del desarrollo social. Mi experiencia técnica ha sido crucial como Gestor de Proyectos, ayudando a unir esfuerzos de equipos multidisciplinarios para impulsar iniciativas tecnológicas exitosas.',
+    me: 'Mi',
+    corePhilosophies: 'Filosofías centrales',
+    experience: 'Experiencia',
+    education: 'Educación',
+    present: 'Actual'
+  }
+} as const
+
+const content = contentMap[lang] ?? contentMap.en
+
+const headings = [
+  {
+    depth: 2,
+    slug: 'me',
+    text: content.me
+  },
+  {
+    depth: 2,
+    slug: 'core-philosophies',
+    text: content.corePhilosophies
+  },
+  {
+    depth: 2,
+    slug: 'education',
+    text: content.education
+  },
+  {
+    depth: 2,
+    slug: 'experience',
+    text: content.experience
+  }
+]
+
+const cardsContentMap: Record<'en' | 'es', FlipCardData[]> = {
+  en: [
+    { icon: 'magnifier', label: 'Skepticism', description: 'Doubt as the compass of truth.' },
+    { icon: 'ying-yang', label: 'Taoism', description: 'The way is unique for everyone, yet the same.' },
+    { icon: 'stoic-symbol', label: 'Stoicism', description: 'Seek character and wisdom on thoughts and actions.' },
+    { icon: 'neural-network', label: 'Dataism', description: 'Information governs, meaning emerges from patterns.' }
+  ],
+  es: [
+    { icon: 'magnifier', label: 'Escepticismo', description: 'La duda como brújula de la verdad.' },
+    { icon: 'ying-yang', label: 'Taoísmo', description: 'El camino es diferente para cada uno y sin embargo es el mismo.' },
+    { icon: 'stoic-symbol', label: 'Estoicismo', description: 'Buscar el carácter sabio en los pensamientos y las acciones.' },
+    { icon: 'neural-network', label: 'Dataísmo', description: 'La información gobierna, el significado emerge de los patrones.' }
+  ]
+}
+
+const cardsContent: FlipCardData[] = cardsContentMap[lang] ?? cardsContentMap.en
+---
+
+<PageLayout title={content.title} headings={headings}>
+  
+    <Image
+      src={avatar}
+      alt='profile'
+      class='h-28 w-auto rounded-full border p-1'
+      loading='eager'
+    />
+  <h2 id='me'>{content.me}</h2>
+  <p class='text-muted-foreground'>Technical Project Manager</p>
+  <p>
+    {content.description}
+  </p>
+  <!-- <Button title='Sponsor Me' class='w-fit' href='/projects#sponsorship' style='ahead' /> -->
+  <!-- general-talk -->
+  <h2 id='core-philosophies'>{content.corePhilosophies}</h2>
+  <FlipCards cardsData={cardsContent} />
+  
+  <h2 id='education'>{content.education}</h2>
+  <Timeline
+    events={[
+
+      {
+        date: '2020',
+        content:
+          'Ingeniería Informática - <a href="https://www.aunar.edu.co/" target="_blank">Corporación Universitaria Autónoma de Nariño</a>'
+      },
+      {
+        date: '2015',
+        content: 'Tecnología en Computación - <a href="https://www.udenar.edu.co/" target="_blank">Universidad de Nariño</a>'
+      }
+    ]}
+  />
+  
+  <h2 id='experience'>{content.experience}</h2>
+  <Timeline
+    events={[
+      {
+        date: `2021 - 📍${content.present}`,
+        content:
+          '<b>Software Research Engineer</b> / <a href="https://www.sdas-group.com" target="_blank">SDAS Group</a> - Bogotá'
+      },
+      {
+        date: '2022 - 2024 ',
+        content:
+          '<b>Software Project Manager</b> / <a href="https://www.k11.technology" target="_blank">K11 Technologies</a> - Bogotá'
+      },
+      {
+        date: '2021 - 2022 ',
+        content:
+          '<b>Lead Developer</b> / <a href="https://www.k11.technology" target="_blank">K11 Technologies</a> - Bogotá'
+      },
+      {
+        date: '2020 - 2021 ',
+        content:
+          '<b>Lead Developer</b> / <a href="https://www.worldbank.org/" target="_blank">World Bank Group</a> - Bogotá'
+      },
+      {
+        date: '2019 - 2020 ',
+        content:
+          '<b>Full-stack Software Developer</b> / <a href="https://www.worldbank.org/" target="_blank">World Bank Group</a> (Logika+) - Bogotá'
+      },
+      {
+        date: '2017 - 2018 ',
+        content:
+          '<b>Full-stack Software Developer</b> / <a href="https://farmaciamagistral.com.co/" target="_blank">Farmacia Magistral</a> (Logika+) - Bogotá'
+      },
+      {
+        date: '2016 - 2017 ',
+        content:
+          '<b>Web Develper</b> / <a href="https://www.capitalaires.com/" target="_blank">Capitalaires</a> - Bogotá'
+      },
+      {
+        date: '2016 - 2016 ',
+        content:
+          '<b>Freelance Web Develper</b> / Blessing GYM - Cali'
+      },
+      {
+        date: '2015 - 2016',
+        content: '<b>Software Developer</b> / <a href="https://previred.com.co/" target="_blank">Previred</a> - Pasto'
+      }
+    ]}
+  />
+
+</PageLayout>

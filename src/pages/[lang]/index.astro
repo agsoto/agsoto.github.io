@@ -1,203 +1,132 @@
 ---
-import { Image } from 'astro:assets'
-import { getRelativeLocaleUrl } from 'astro:i18n'
 
-import { Quote } from 'astro-pure/advanced'
+import { getRelativeLocaleUrl } from 'astro:i18n'
 import { PostPreview } from 'astro-pure/components/pages'
 import { getBlogCollectionByLocale, sortMDByDate } from 'astro-pure/server'
-import { Button, Card, Icon, Label } from 'astro-pure/user'
+import { Button } from 'astro-pure/user'
 import PageLayout from '@/layouts/BaseLayout.astro'
-import ProjectCard from '@/components/home/ProjectCard.astro'
 import Section from '@/components/home/Section.astro'
-import SkillLayout from '@/components/home/SkillLayout.astro'
-import avatar from '@/assets/avatar.png'
-import config from '@/site-config'
+import maze from "@/assets/icons/ww-maze.svg?raw";
 
 export { getLangStaticPaths as getStaticPaths } from 'astro-pure/server'
 
 export const prerender = true
 
-const languages = ['Html', 'JavaScript', 'CSS', 'Shell']
-const frontend = ['TypeScript', 'Vite', 'Webpack', 'Astro']
-const backend = ['Vercel', 'Waline']
-
 const MAX_POSTS = 10
 const allPosts = await getBlogCollectionByLocale(Astro.currentLocale)
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
+
+const multiligualContent = {
+  en: { 
+    home: 'Home',
+    title: 'Human Insight shaping purpose-driven digital systems.', 
+    subtitle: 'The sophistication of computer systems is growing faster than our ability to absorb them, reshaping economic, political, and social power. My pursuit is about technology that strengthens human values instead of replacing them.',
+    description: "I'm an Informatics Engineer driven by the transformative potential of knowledge to improve our lives and our world. Over the past decade, I've been contributing to the development of platforms—from helping shape ideas to measuring their impact—engaging with every phase of the software lifecycle. I have the conviction that we're on the greatest technological revolution, and it's more important than ever that we shape the future collectively.",
+    about: 'About',
+    posts: 'Posts',
+    button_more_about: 'Know more',
+    button_posts: 'All posts'
+  },
+  es: {
+    home: 'Inicio',
+    title: 'Comprensión humana para sistemas digitales con propósito.',
+    subtitle: 'La sofisticación de los sistemas informáticos crece más rápido que nuestra capacidad para asimilarlos, reordenando el poder económico, político y social. Persigo tecnología que fortalece valores humanos, en lugar de sustituirlos.',
+    description: 'Soy un Ingeniero Informático motivado por la capacidad transformadora del conocimiento para mejorar nuestras vidas y nuestro mundo. Durante la última década, he contribuido al desarrollo de plataformas, desde ayudar a dar forma a las ideas hasta medir su impacto, participando en todas las fases del ciclo de vida del software. Tengo la convicción de que estamos ante la más grande revolución tecnológica y que es más importante que nunca forjar el futuro colectivamente.',
+    about: 'Sobre mí',
+    posts: 'Publicaciones',
+    button_more_about: 'Saber más',
+    button_posts: 'Todas las publicaciones'
+  }
+};
+const content = multiligualContent[Astro.currentLocale as keyof typeof multiligualContent];
 ---
 
-<PageLayout meta={{ title: 'Home' }} highlightColor='#659EB9'>
-  <main class='flex w-full flex-col items-center'>
-    <section class='animate mb-10 flex flex-col items-center gap-y-7' id='content-header'>
-      <Image
-        src={avatar}
-        alt='profile'
-        class='h-28 w-auto rounded-full border p-1'
-        loading='eager'
-      />
+<PageLayout meta={{ title: content.home }}}>
+  <div class='labyrinth-bg' aria-hidden='true' slot='background'></div>
+  <div class='flex w-full flex-col gap-y-10 md:w-4/5 lg:w-5/6 mx-auto'>
+    <div>
+      <Fragment style="margin: auto;" set:html={maze} />
+    </div>
+    <section class='animate flex flex-col items-center gap-y-7 mb-9'>
 
       <div class='flex flex-col items-center gap-y-4'>
-        <h1 class='text-3xl font-bold'>{config.author}</h1>
-        <div class='flex flex-wrap justify-center gap-x-7 gap-y-3'>
-          <Label title='China'>
-            <Icon name='location' class='size-5' slot='icon' />
-          </Label>
-          <Label
-            title='Source code'
-            as='a'
-            href='https://github.com/cworld1/astro-theme-pure'
-            target='_blank'
-          >
-            <Icon name='github' class='size-5' slot='icon' />
-          </Label>
-        </div>
+        <!-- <h1 class='text-3xl font-bold text-center'>Andres Guillermo Soto-Rangel</h1> -->
+        <h3 class='text-3xl font-bold text-center'>{content.title}</h3>
+        <h3 class='text-xl text-center'>{content.subtitle}</h3>
+        
       </div>
-
-      {/* Get template */}
-      <a
-        href='https://github.com/cworld1/astro-theme-pure'
-        target='_blank'
-        class='flex flex-row items-center gap-x-3 rounded-full border bg-background px-4 py-2 text-sm shadow-sm transition-shadow hover:shadow-md'
-      >
-        <span class='relative flex items-center justify-center'>
-          <span
-            class='absolute size-2 animate-ping rounded-full border border-green-400 bg-green-400 opacity-75'
-          ></span>
-          <span class='size-2 rounded-full bg-green-400'></span>
-        </span>
-        <p class='font-medium text-muted-foreground'>Get Template</p>
-      </a>
     </section>
 
-    <div id='content' class='animate flex flex-col gap-y-10 md:w-4/5 lg:w-5/6'>
-      <Section title='About'>
-        <p class='text-muted-foreground'>Developer / Designer</p>
-        <p class='text-muted-foreground'>
-          Lorem ipsum dolor sit amet, vidit suscipit at mei. Quem denique mea id. Usu ei regione
-          indoctum dissentiunt, cu meliore fuisset mei, vel quod voluptua ne. Ex dicat impedit mel,
-          at eum oratio possit voluptatum.
-        </p>
-        <Button
-          title='More about me'
-          class='w-fit self-end'
-          href={getRelativeLocaleUrl(Astro.currentLocale as string, '/about')}
-          variant='ahead'
-        />
-      </Section>
-      {
-        allPostsByDate.length > 0 && (
-          <Section title='Posts'>
-            <ul class='flex flex-col gap-y-1.5 sm:gap-y-2'>
-              {allPostsByDate.map((p) => (
-                <li class='flex flex-col gap-x-2 sm:flex-row'>
-                  <PostPreview post={p} />
-                </li>
-              ))}
-            </ul>
-            <Button
-              title='More posts'
-              class='w-fit self-end'
-              href={getRelativeLocaleUrl(Astro.currentLocale as string, '/blog')}
-              variant='ahead'
-            />
-          </Section>
-        )
-      }
+    <Section title={content.about}>
+      <p class='text-muted-foreground'>
+        {content.description}
+      </p>
+      <Button title={content.button_more_about} class='w-fit self-end' href={`${getRelativeLocaleUrl(Astro.currentLocale as string, '/about')}`} style='ahead' />
+    </Section>
+    {
+      allPostsByDate.length > 0 && (
+        <Section title={content.posts}>
+          <ul class='flex flex-col gap-y-1.5 sm:gap-y-2'>
+            {allPostsByDate.map((p) => (
+              <li class='flex flex-col gap-x-2 sm:flex-row'>
+                {/* @ts-ignore */}
+                <PostPreview post={p} />
+              </li>
+            ))}
+          </ul>
+          <Button title={content.button_posts} class='w-fit self-end' href={`${getRelativeLocaleUrl(Astro.currentLocale as string, '/blog')}`} style='ahead' />
+        </Section>
+      )
+    }
 
-      {
-        /* <Section title='Experience'>
-      <Card
-        heading='Lorem Ipsum'
-        subheading='Sit amet consectetur'
-        date='Dec 2022 - Nov 2023'
-        imagePath='/src/assets/about-astro.png'
-        altText='Lorem, ipsum dolor sit'
-        imageClass='h-12 w-auto md:-start-16'
-      >
-        <ul class='ms-4 list-disc text-muted-foreground'>
-          <li>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore debitis recusandae, ut
-            molestiae laboriosam pariatur!
-
-            <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, pariatur!</li>
-          </li>
-        </ul>
-      </Card>
-      <Card
-        heading='Lorem Ipsum'
-        subheading='Sit amet consectetur'
-        date='Dec 2022 - Nov 2023'
-        imagePath='/src/assets/about-astro.png'
-        altText='Lorem, ipsum dolor sit'
-        imageClass='h-12 w-auto md:-start-16'
-      />
-    </Section> */
-      }
-      <Section title='Education'>
-        <Card
-          as='a'
-          heading='Lorem ipsum'
-          subheading='Lorem ipsum dolor sit amet, vidit suscipit at mei.'
-          date='August 2021 - July 2025'
-          href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-        >
-          {
-            /* <ul class='ms-4 list-disc text-muted-foreground'>
-          <li>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore debitis recusandae, ut
-            molestiae laboriosam pariatur!
-          </li>
-          <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, pariatur!</li>
-        </ul> */
-          }
-        </Card>
-      </Section>
-
-      <Section title='Website List'>
-        <div class='grid grid-cols-1 gap-3 sm:grid-cols-2'>
-          <ProjectCard
-            href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-            heading='Lorem ipsum'
-            subheading='dolor sit amet, oratio ornatus explicari pro ex'
-            imagePath='/src/assets/projects/1.jpg'
-          />
-          <ProjectCard
-            href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-            heading='Lorem ipsum'
-            subheading='dolor sit amet, oratio ornatus explicari pro ex'
-            imagePath='/src/assets/projects/2.jpg'
-          />
-          <ProjectCard
-            href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-            heading='Lorem ipsum'
-            subheading='dolor sit amet, oratio ornatus explicari pro ex'
-            imagePath='/src/assets/projects/3.jpg'
-          />
-          <ProjectCard
-            href={getRelativeLocaleUrl(Astro.currentLocale as string, '/projects')}
-            heading='More projects'
-            subheading='Check out more projects'
-            imagePath='/src/assets/projects/4.jpg'
-          />
-        </div>
-      </Section>
-
-      <Section title='Certifications'>
-        <Card
-          as='a'
-          heading='Lorem ipsum'
-          subheading='Lorem ipsum dolor sit amet, vidit suscipit at mei. Quem denique mea id. Usu ei regione indoctum dissentiunt, cu meliore fuisset mei, vel quod voluptua ne. Ex dicat impedit mel, at eum oratio possit voluptatum. Dicat ceteros cu vim. Impetus fuisset ullamcorper pri cu, his posse iisque ad, aliquam honestatis usu id.'
-          date='July 2024'
-          href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-        />
-      </Section>
-
-      <Section title='Skills'>
-        <SkillLayout title='Languages' skills={languages} />
-        <SkillLayout title='Frontend' skills={frontend} />
-        <SkillLayout title='Backend' skills={backend} />
-      </Section>
-    </div>
-    <Quote class='mt-12' />
-  </main>
+  </div>
 </PageLayout>
+  <style is:global>
+    .labyrinth-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      --s: 250px;
+      --c1: hsl(var(--background));
+      --c2: hsl(var(--muted));
+      --ox: 0px;
+      --oy: 0px;
+      --_c: var(--c1) 25%, #0000 0;
+      --_g1: conic-gradient(at 62.5% 12.5%, var(--_c));
+      --_g2: conic-gradient(at 87.5% 62.5%, var(--_c));
+      --_g3: conic-gradient(at 25% 12.5%, var(--_c));
+      background:
+        var(--_g1) calc(var(--s) / -8 + var(--ox)) calc(var(--s) / 2 + var(--oy)),
+        var(--_g1) calc(-3 * var(--s) / 8 + var(--ox)) calc(var(--s) / 4 + var(--oy)),
+        var(--_g2) calc(3 * var(--s) / 8 + var(--ox)) calc(var(--s) / 4 + var(--oy)),
+        var(--_g2) calc(var(--s) / -8 + var(--ox)) calc(0px + var(--oy)),
+        var(--_g3) calc(0px + var(--ox)) calc(var(--s) / -4 + var(--oy)),
+        var(--_g3) calc(var(--s) / -4 + var(--ox)) calc(0px + var(--oy)),
+        conic-gradient(at 87.5% 87.5%, var(--_c)) calc(var(--s) / 8 + var(--ox)) calc(0px + var(--oy)) var(--c2);
+      background-size: var(--s) var(--s);
+      opacity: .35;
+      mix-blend-mode: multiply;
+      will-change: background-position;
+      
+    }
+    .dark .labyrinth-bg {
+      --c1: hsl(var(--muted));
+      --c2: hsl(var(--background));
+      opacity: .15;
+      mix-blend-mode: normal;
+    }
+  </style>
+<script is:inline>
+  const el = document.querySelector('.labyrinth-bg')
+  const m = 12
+  const onMove = (e) => {
+    const x = (e.clientX / window.innerWidth - 0.5) * m
+    const y = (e.clientY / window.innerHeight - 0.5) * m
+    if (el) {
+      el.style.setProperty('--ox', x + 'px')
+      el.style.setProperty('--oy', y + 'px')
+    }
+  }
+  window.addEventListener('pointermove', onMove, { passive: true })
+</script>

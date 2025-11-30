@@ -14,7 +14,7 @@ interface Props {
   back?: string
 }
 
-const { meta, highlightColor, back = '/', ...props } = Astro.props
+const { meta, highlightColor, back, ...props } = Astro.props
 ---
 
 <PageLayout {meta} {highlightColor} {...props}>
