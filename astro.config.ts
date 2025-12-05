@@ -1,5 +1,4 @@
 import { rehypeHeadingIds } from '@astrojs/markdown-remark'
-import vercel from '@astrojs/vercel'
 import { defineConfig, fontProviders } from 'astro/config'
 import rehypeKatex from 'rehype-katex'
 import remarkMath from 'remark-math'
@@ -26,10 +25,10 @@ const DEFAULT_LOCALE = 'en'
 // https://astro.build/config
 export default defineConfig({
   // Top-Level Options
-  site: 'https://astro-pure.js.org',
+  site: process.env.SITE_URL || 'https://agsoto.github.io',
   // Deploy to a sub path; See https://astro-pure.js.org/docs/setup/deployment#platform-with-base-path
   // base: '/astro-pure/',
-  trailingSlash: 'never',
+  trailingSlash: 'ignore',
 
   // Adapter
   // https://docs.astro.build/en/guides/deploy/
@@ -119,13 +118,7 @@ export default defineConfig({
   },
   i18n: {
     locales: [DEFAULT_LOCALE, 'es'],
-    defaultLocale: DEFAULT_LOCALE,
-    fallback: {
-      es: DEFAULT_LOCALE
-    },
-    routing: {
-      fallbackType: 'rewrite'
-    }
+    defaultLocale: DEFAULT_LOCALE
   },
   vite: {
     plugins: [
